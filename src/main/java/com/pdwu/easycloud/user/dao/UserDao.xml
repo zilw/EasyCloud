@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdwu.easycloud.user.dao.UserDao">
+
+
+    <resultMap id="userBeanMap" type="com.pdwu.easycloud.user.bean.UserBean">
+        <result column="USER_ID" property="userId"/>
+        <result column="ACCOUNT" property="account"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="LAST_TIME" property="lastTime"/>
+
+    </resultMap>
+
+
+    <select id="selectUserAccountCount" resultType="int" parameterType="string">
+
+        SELECT count(1)
+        FROM USER_INFO
+        WHERE ACCOUNT = #{account}
+
+    </select>
+
+    <select id="selectUserByAccountAndPassword" resultMap="userBeanMap"
+            parameterType="com.pdwu.easycloud.user.bean.UserBean">
+
+        SELECT
+            USER_ID,
+            ACCOUNT,
+            CREATE_TIME,
+            LAST_TIME
+        FROM user_info
+        WHERE ACCOUNT = #{account}
+              AND PASSWORD = #{password}
+
+    </select>
+
+    <select id="selectUserInfo" resultMap="userBeanMap"
+            parameterType="map">
+
+        SELECT
+        USER_ID,
+        ACCOUNT,
+        CREATE_TIME,
+        LAST_TIME
+        FROM user_info
+        <where>
+
+            <if test="userId != null">
+                AND USER_ID = #{userId}
+            </if>
+
+            <if test="account != null">
+                AND ACCOUNT = #{account}
+            </if>
+
+        </where>
+
+    </select>
+
+
+    <insert id="insertUser" parameterType="com.pdwu.easycloud.user.bean.UserBean" useGeneratedKeys="true" keyProperty="userId">
+
+        INSERT INTO USER_INFO (ACCOUNT, PASSWORD, CREATE_TIME, LAST_TIME)
+            VALUE (#{account}, #{password}, #{createTime}, #{lastTime})
+
+    </insert>
+
+    <delete id="deleteAllInfo">
+
+        DELETE FROM user_info
+
+    </delete>
+
+</mapper>

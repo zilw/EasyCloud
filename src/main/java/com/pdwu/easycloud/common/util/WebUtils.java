@@ -15,7 +15,7 @@ public class WebUtils {
             "/login.*",
             "/register.*",
             "/static.*",
-            "/share"
+            "/share.*"
     };
 
     public static boolean checkUriPublic(String uri) {

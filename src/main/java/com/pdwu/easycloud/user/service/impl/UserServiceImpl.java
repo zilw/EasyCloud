@@ -27,7 +27,6 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private ITokenService tokenService;
 
-
     public UserBean login(String account, String password) {
 
         if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
@@ -74,7 +73,7 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-    public UserBean getUserInfo(Map<String, String> map) {
+    public UserBean getUserInfo(Map<String, Object> map) {
         if (map == null) return null;
 
         List<UserBean> list = this.userDao.selectUserInfo(map);

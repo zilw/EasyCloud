@@ -16,6 +16,6 @@ public interface UserDao {
 
     int selectUserAccountCount(String account);
 
-    List<UserBean> selectUserInfo(Map<String, String> map);
+    List<UserBean> selectUserInfo(Map<String, Object> map);
 
 }

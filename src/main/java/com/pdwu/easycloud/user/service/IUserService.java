@@ -10,10 +10,30 @@ import java.util.Map;
  */
 public interface IUserService {
 
+    /**
+     * 登录
+     *
+     * @param account  账户
+     * @param password 密码
+     * @return
+     */
     UserBean login(String account, String password);
 
+    /**
+     * 注册
+     *
+     * @param account  账户
+     * @param password 密码
+     * @return
+     */
     ResultBean register(String account, String password);
 
-    UserBean getUserInfo(Map<String,String> map);
+    /**
+     * 获取用户信息
+     *
+     * @param map 可传入 userId, account
+     * @return
+     */
+    UserBean getUserInfo(Map<String, Object> map);
 
 }

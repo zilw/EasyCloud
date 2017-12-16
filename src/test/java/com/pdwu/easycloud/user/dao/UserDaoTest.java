@@ -70,7 +70,7 @@ public class UserDaoTest {
 
         this.userDao.insertUser(bean);
 
-        assertNotEquals(null, bean.getUserId());
+        assertNotNull(bean.getUserId());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class UserDaoTest {
     public void selectUserInfo() throws Exception {
 
         //按userId找xiaoming
-        Map<String, String> param = new HashMap<String, String>();
+        Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", "10010");
         List<UserBean> list = this.userDao.selectUserInfo(param);
         assertEquals("xiaoming", list.get(0).getAccount());

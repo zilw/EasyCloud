@@ -11,5 +11,7 @@ public class UuidUtilsTest {
 
         System.out.println(UuidUtils.newUUID());
 
+        new UuidUtils();
+
     }
 }

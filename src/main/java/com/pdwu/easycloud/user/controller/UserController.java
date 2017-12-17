@@ -4,12 +4,12 @@ import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.user.bean.UserBean;
 import com.pdwu.easycloud.user.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -19,6 +19,8 @@ import java.util.Map;
 @Controller
 public class UserController {
 
+    private Logger log = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private IUserService userService;
 
@@ -26,9 +28,9 @@ public class UserController {
     @ResponseBody
     public Object login(@RequestBody Map<String, String> requestMap) {
 
-        String account = requestMap.get("username");
+        String account = requestMap.get("account");
         if (StringUtils.isBlank(account)) {
-            return ResultBean.fail("用户名不能为空");
+            return ResultBean.fail("账户不能为空");
         }
         String password = requestMap.get("password");
         if (StringUtils.isBlank(password)) {
@@ -37,7 +39,7 @@ public class UserController {
 
         UserBean bean = userService.login(account, password);
         if (bean == null) {
-            return ResultBean.fail("用户名不存在或密码错误！");
+            return ResultBean.fail("账户不存在或密码错误！");
         }
 
         return ResultBean.success(bean);
@@ -45,15 +47,29 @@ public class UserController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public Object register(@RequestBody UserBean bean) {
+    public Object register(@RequestBody Map<String, String> requestMap) {
 
-        if (StringUtils.isBlank(bean.getAccount())) {
-            return ResultBean.fail("用户名不能为空");
+        log.debug("/register request: {}", requestMap.toString());
+
+
+        if (StringUtils.isBlank(requestMap.get("account"))) {
+            return ResultBean.fail("账户不能为空");
         }
-        if (StringUtils.isBlank(bean.getPassword())) {
+        if (StringUtils.isBlank(requestMap.get("password"))) {
             return ResultBean.fail("密码不能为空");
         }
-        return this.userService.register(bean.getAccount(), bean.getPassword());
+        return this.userService.register(requestMap.get("account"), requestMap.get("password"));
+    }
+
+    @RequestMapping(value = "/logout")
+    @ResponseBody
+    public Object logout(@RequestParam String token) {
+        if (StringUtils.isBlank(token)) {
+            return ResultBean.fail("注销失败，token不能为空");
+        }
+
+        return this.userService.logout(token);
+
     }
 
 }

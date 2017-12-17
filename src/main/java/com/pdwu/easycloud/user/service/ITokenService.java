@@ -21,4 +21,13 @@ public interface ITokenService {
      */
     ResultBean checkTokenValid(String token);
 
+    /**
+     * 更新token状态
+     *
+     * @param token
+     * @param status
+     * @return
+     */
+    ResultBean updateTokenStatus(String token, Integer status);
+
 }

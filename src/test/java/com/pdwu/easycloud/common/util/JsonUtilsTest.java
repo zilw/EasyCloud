@@ -15,7 +15,7 @@ public class JsonUtilsTest {
     public void objectToJson() throws Exception {
 
         String res = JsonUtils.objectToJson(ResultBean.fail(123, "fail"));
-        assertEquals("{\"msg\":\"fail\",\"code\":123,\"data\":{}}", res);
+        assertEquals("{\"msg\":\"fail\",\"code\":123,\"data\":null}", res);
 
         String res2 = JsonUtils.objectToJson(ResultBean.success("hehe"));
         assertEquals("{\"msg\":\"\",\"code\":200,\"data\":\"hehe\"}", res2);

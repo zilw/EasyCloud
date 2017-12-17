@@ -4,6 +4,7 @@ import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
 import com.pdwu.easycloud.user.bean.TokenBean;
 import com.pdwu.easycloud.user.bean.UserBean;
+import com.pdwu.easycloud.user.constant.TokenConstant;
 import com.pdwu.easycloud.user.dao.UserDao;
 import com.pdwu.easycloud.user.service.ITokenService;
 import com.pdwu.easycloud.user.service.IUserService;
@@ -71,6 +72,16 @@ public class UserServiceImpl implements IUserService {
 
         return ResultBean.success("注册成功");
 
+    }
+
+    public ResultBean logout(String token) {
+
+        ResultBean resultBean = this.tokenService.updateTokenStatus(token, TokenConstant.STATUS_DELETE);
+        if (resultBean.getCode() == ResultCode.ok) {
+            return ResultBean.success("注销成功");
+        }
+
+        return resultBean;
     }
 
     public UserBean getUserInfo(Map<String, Object> map) {

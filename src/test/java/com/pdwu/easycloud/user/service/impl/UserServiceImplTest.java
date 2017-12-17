@@ -34,6 +34,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml"})
 public class UserServiceImplTest {
 
+
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
     @Autowired
@@ -52,6 +53,12 @@ public class UserServiceImplTest {
                         .values(10010L, "xiaoming", "thisispassword", new Date(1513317967830L), new Date(1513317967830L))
                         .values(10011L, "zhangsan", "thisispassword", new Date(1513317967840L), new Date(1513317967840L))
                         .values(10012L, "lisi", "mythisispassword", new Date(1513317967850L), new Date(1513317967850L))
+                        .build(),
+                Operations.insertInto("user_token")
+                        .columns("USER_ID", "TOKEN", "STATUS", "CREATE_TIME", "LAST_TIME")
+                        .values(10012L, "12d8aa790b4444aa9796c92cf8af28d9", 1, new Date(1513317967850L), new Date(1513317967860L))
+                        .values(10012L, "13d8aa790b4444aa9796c92cf8af28d9", 0, new Date(1513317967860L), new Date(1513317967860L))
+                        .values(10010L, "14d8aa790b4444aa9796c92cf8af28d9", 0, new Date(1513317967850L), new Date(1513317967850L))
                         .build()
         );
 
@@ -131,6 +138,21 @@ public class UserServiceImplTest {
         param.put("userId", "nothisId");
         UserBean bean2 = userService.getUserInfo(param);
         assertNull(null, bean2);
+
+    }
+
+    @Test
+    public void logout() throws Exception {
+
+        //参数
+        assertEquals(400, userService.logout(null).getCode());
+
+        //不存在的token
+        assertEquals(400, userService.logout("nothisToken").getCode());
+
+        //正常
+        assertEquals(200, userService.logout("14d8aa790b4444aa9796c92cf8af28d9").getCode());
+
 
     }
 

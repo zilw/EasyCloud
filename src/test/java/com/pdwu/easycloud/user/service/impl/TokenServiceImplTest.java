@@ -5,8 +5,10 @@ import com.ninja_squad.dbsetup.DbSetupTracker;
 import com.ninja_squad.dbsetup.Operations;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
+import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
 import com.pdwu.easycloud.user.bean.TokenBean;
+import com.pdwu.easycloud.user.constant.TokenConstant;
 import com.pdwu.easycloud.user.service.ITokenService;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +32,7 @@ import static org.junit.Assert.*;
 @WebAppConfiguration("src/main/resources")
 @ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml"})
 public class TokenServiceImplTest {
+
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
@@ -87,6 +90,25 @@ public class TokenServiceImplTest {
         //数据库状态有效，但取出后再比较过期时间，会无效的token  10019L
         assertEquals(1, tokenService.checkTokenValid("19d8aa790b4444aa9796c92cf8af28d9").getCode());
 
+
+    }
+
+    @Test
+    public void updateTokenStatus() throws Exception {
+        //参数
+        assertEquals(400, tokenService.updateTokenStatus(null, 1).getCode());
+
+        //成功
+        ResultBean bean = tokenService.updateTokenStatus("14d8aa790b4444aa9796c92cf8af28d9", TokenConstant.STATUS_DELETE);
+        assertEquals(200, bean.getCode());
+
+        //状态已被更改 (还是会成功）
+        ResultBean bean1 = tokenService.updateTokenStatus("12d8aa790b4444aa9796c92cf8af28d9", TokenConstant.STATUS_DELETE);
+        assertEquals(200, bean1.getCode());
+
+        //token不存在
+        ResultBean bean2 = tokenService.updateTokenStatus("faopsfjaf", TokenConstant.STATUS_DELETE);
+        assertEquals(400, bean2.getCode());
 
     }
 

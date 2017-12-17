@@ -29,6 +29,14 @@ public interface IUserService {
     ResultBean register(String account, String password);
 
     /**
+     * 注销
+     *
+     * @param token
+     * @return
+     */
+    ResultBean logout(String token);
+
+    /**
      * 获取用户信息
      *
      * @param map 可传入 userId, account

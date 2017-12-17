@@ -11,7 +11,6 @@ public class ResultBean {
     //error
     public static final ResultBean ARG_ERROR = fail("参数异常");
 
-    private static final Object EMPTY_OBJECT = new Object();
 
     public ResultBean(int code, Object data, String msg) {
         this.code = code;
@@ -24,16 +23,12 @@ public class ResultBean {
         return new ResultBean(ResultCode.ok, data, "");
     }
 
-    public static ResultBean success(int resultCode, Object data) {
-        return new ResultBean(resultCode, data, "");
-    }
-
     public static ResultBean fail(String errorMsg) {
-        return new ResultBean(ResultCode.fail, EMPTY_OBJECT, errorMsg);
+        return new ResultBean(ResultCode.fail, null, errorMsg);
     }
 
     public static ResultBean fail(int resultCode, String errorMsg) {
-        return new ResultBean(resultCode, EMPTY_OBJECT, errorMsg);
+        return new ResultBean(resultCode, null, errorMsg);
     }
 
 

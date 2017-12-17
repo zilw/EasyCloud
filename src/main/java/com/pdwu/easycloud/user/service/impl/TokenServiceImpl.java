@@ -3,6 +3,7 @@ package com.pdwu.easycloud.user.service.impl;
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.util.UuidUtils;
 import com.pdwu.easycloud.user.bean.TokenBean;
+import com.pdwu.easycloud.user.constant.TokenConstant;
 import com.pdwu.easycloud.user.dao.TokenDao;
 import com.pdwu.easycloud.user.service.ITokenService;
 import com.pdwu.easycloud.user.util.TokenUtils;
@@ -25,7 +26,7 @@ public class TokenServiceImpl implements ITokenService {
 
         TokenBean bean = new TokenBean();
         bean.setUserId(userId);
-        bean.setStatus(0);
+        bean.setStatus(TokenConstant.STATUS_NORMAL);
         bean.setToken(UuidUtils.newUUID());
         Date date = new Date();
         bean.setCreateTime(date);
@@ -40,9 +41,9 @@ public class TokenServiceImpl implements ITokenService {
             return ResultBean.ARG_ERROR;
         }
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Object> map = new HashMap<String, Object>();
         map.put("token", token);
-        map.put("status", "0");
+        map.put("status", TokenConstant.STATUS_NORMAL);
         List<TokenBean> list = this.tokenDao.selectToken(map);
         if (list == null || list.size() == 0) {
             return ResultBean.fail(1, "Token已失效");
@@ -54,5 +55,21 @@ public class TokenServiceImpl implements ITokenService {
         }
 
         return ResultBean.success(list.get(0));
+    }
+
+    public ResultBean updateTokenStatus(String token, Integer status) {
+        if (StringUtils.isBlank(token) || status == null) {
+            return ResultBean.ARG_ERROR;
+        }
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("token", token);
+        param.put("status", status);
+        int updatedCount = this.tokenDao.updateTokenStatus(param);
+
+        if (updatedCount == 0) {
+            return ResultBean.fail("token不存在");
+        }
+
+        return ResultBean.success("");
     }
 }

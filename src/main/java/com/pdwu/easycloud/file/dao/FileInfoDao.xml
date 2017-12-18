@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pdwu.easycloud.file.dao.FileInfoDao">
+
+    <resultMap id="fileInfoMap" type="com.pdwu.easycloud.file.bean.FileInfoBean">
+
+        <id column="FILE_ID" property="fileId"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="MD5" property="md5"/>
+        <result column="PATH" property="path"/>
+        <result column="NAME" property="name"/>
+        <result column="STATUS" property="status"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="LAST_TIME" property="lastTime"/>
+
+    </resultMap>
+
+    <insert id="insertFileInfo" parameterType="com.pdwu.easycloud.file.bean.FileInfoBean"
+            useGeneratedKeys="true" keyProperty="fileId">
+
+        INSERT INTO file_info (USER_ID, MD5, PATH, NAME, STATUS, CREATE_TIME, LAST_TIME)
+            VALUE (#{userId}, #{md5}, #{path}, #{name}, #{status}, #{createTime}, #{lastTime})
+
+    </insert>
+
+    <select id="selectFileInfoList" parameterType="map" resultMap="fileInfoMap">
+
+        SELECT FILE_ID,USER_ID, MD5, PATH, NAME, STATUS, CREATE_TIME, LAST_TIME
+        FROM file_info
+        <where>
+
+            <if test="userId != null">
+                USER_ID = #{userId}
+            </if>
+
+            <if test="fileId != null">
+                AND FILE_ID = #{fileId}
+            </if>
+
+            <if test="md5 != null">
+                AND MD5 = #{md5}
+            </if>
+
+            <if test="status != null">
+                AND STATUS = #{status}
+            </if>
+
+        </where>
+
+        <if test="pageIndex > 0">
+            LIMIT #{pageIndex},#{pageCount}
+        </if>
+
+    </select>
+
+    <update id="updateFileInfo" parameterType="map">
+
+        UPDATE file_info
+        <set>
+            LAST_TIME = #{lastTime}
+
+            <if test="name != null">
+                , NAME = #{name}
+            </if>
+
+            <if test="status != null">
+                , STATUS = #{status}
+            </if>
+
+        </set>
+
+        <where>
+
+            FILE_ID = #{fileId}
+
+        </where>
+
+    </update>
+
+
+</mapper>

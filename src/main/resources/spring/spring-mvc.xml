@@ -48,7 +48,7 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/*"/>
+            <mvc:mapping path="/**"/>
             <bean class="com.pdwu.easycloud.user.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

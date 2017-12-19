@@ -15,8 +15,20 @@
     <context:annotation-config/>
 
     <context:component-scan base-package='com.pdwu.easycloud'>
-        <context:exclude-filter expression='org.springframework.stereotype.Controller' type='annotation' />
+        <context:exclude-filter expression='org.springframework.stereotype.Controller' type='annotation'/>
     </context:component-scan>
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <!-- db配置文件 -->
+                <value>classpath:db.properties</value>
+                <!--应用配置-->
+                <value>classpath:app/easycloud.properties</value>
+            </list>
+        </property>
+    </bean>
 
     <import resource="spring-mybatis.xml"/>
 

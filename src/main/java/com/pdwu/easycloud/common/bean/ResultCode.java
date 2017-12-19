@@ -6,4 +6,5 @@ package com.pdwu.easycloud.common.bean;
 public class ResultCode {
     public static final int ok = 200;
     public static final int fail = 400;
+    public static final int server_error = 500;
 }

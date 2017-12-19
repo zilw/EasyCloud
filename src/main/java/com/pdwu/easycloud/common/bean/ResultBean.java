@@ -10,7 +10,7 @@ public class ResultBean {
 
     //error
     public static final ResultBean ARG_ERROR = fail("参数异常");
-
+    public static final ResultBean SERVER_ERROR = fail(ResultCode.server_error, "服务器异常");
 
     public ResultBean(int code, Object data, String msg) {
         this.code = code;

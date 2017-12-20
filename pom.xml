@@ -192,6 +192,13 @@
             <version>3.7</version>
         </dependency>
 
+        <!--文件上传-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -213,6 +220,7 @@
                 <includes>
                     <include>**/*.xml</include>
                     <include>**/*.properties</include>
+                    <include>**/*.sql</include>
                 </includes>
             </resource>
         </resources>

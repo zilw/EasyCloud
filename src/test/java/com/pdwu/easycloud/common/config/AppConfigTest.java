@@ -21,9 +21,12 @@ public class AppConfigTest {
     private AppConfig appConfig;
 
     @Test
-    public void testAppConfig(){
+    public void testAppConfig() {
         assertTrue(appConfig.getUserFilePath().length() > 2);
+        assertTrue(!appConfig.getUserFilePath().contains("userfilepath"));
         System.out.println(appConfig.getUserFilePath());
+
+        new AppConfig();
     }
 
 

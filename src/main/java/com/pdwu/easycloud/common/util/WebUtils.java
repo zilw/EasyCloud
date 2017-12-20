@@ -10,7 +10,7 @@ import java.util.List;
 public class WebUtils {
 
     private static String[] pubUris = new String[]{
-            "/pub/.*",
+            "/pub.*",
             "/error.*",
             "/login.*",
             "/register.*",

@@ -6,22 +6,28 @@ import com.ninja_squad.dbsetup.Operations;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
 import com.pdwu.easycloud.file.service.IFileService;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.sql.DataSource;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
 import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static org.junit.Assert.*;
@@ -32,7 +38,9 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
 @ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml"})
+//@TestPropertySource(locations = {"classpath:app/easycloud.properties"})
 public class FileServiceImplTest {
+
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
@@ -41,6 +49,9 @@ public class FileServiceImplTest {
 
     @Autowired
     private IFileService fileService;
+
+    @Autowired
+    private AppConfig appConfig;
 
 
     @Before
@@ -141,4 +152,61 @@ public class FileServiceImplTest {
 
     }
 
+    @Test
+    public void getFileInfoByMD5() throws Exception {
+        //arg
+        assertNull(fileService.getFileInfoByMD5(null));
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        FileInfoBean bean = fileService.getFileInfoByMD5("099b3b060154898840f0ebdfb46ec78f");
+        assertEquals(103L, bean.getFileId().longValue());
+        assertEquals(10012L, bean.getUserId().longValue());
+        assertEquals("/file/10012/", bean.getPath());
+        assertEquals("1513317967835.png", bean.getName());
+        assertEquals(1513317967830L, bean.getCreateTime().getTime());
+        assertEquals(1513317967830L, bean.getLastTime().getTime());
+    }
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void uploadFile() throws Exception {
+
+        //arg
+        assertEquals(400, fileService.uploadFile(null, null).getCode());
+        assertEquals(400, fileService.uploadFile(1L, null).getCode());
+
+        //上传文件
+        MultipartFile multipartFile = new MockMultipartFile("file", "filename.txt", "text/plain", "thisIsMockMultipartFileContent".getBytes());
+        ResultBean bean = fileService.uploadFile(10012L, multipartFile);
+        FileInfoBean fileInfoBean = (FileInfoBean) bean.getData();
+        assertEquals(200, bean.getCode());
+        assertEquals("filename.txt", fileInfoBean.getName());
+        assertNotNull(fileInfoBean.getCreateTime());
+
+        //再次上传同样MD5的文件 （用户，文件名不同）
+        MultipartFile multipartFile1 = new MockMultipartFile("file", "filenameDiff.txt", "text/plain", "thisIsMockMultipartFileContent".getBytes());
+        ResultBean bean1 = fileService.uploadFile(10013L, multipartFile1);
+        FileInfoBean fileInfoBean1 = (FileInfoBean) bean1.getData();
+        assertEquals(200, bean1.getCode());
+        assertEquals("filenameDiff.txt", fileInfoBean1.getName());
+        assertNotNull(fileInfoBean1.getCreateTime());
+        assertEquals(fileInfoBean.getPath(), fileInfoBean1.getPath()); //真实地址应该相同
+
+    }
+
+    @Test
+    public void uploadFileException() throws Exception {
+
+        expectedException.expect(IOException.class);    //期望的异常
+        expectedException.expectMessage("Directory '*' could not be created");
+
+        //目录配置错误导致异常
+        MultipartFile multipartFile2 = new MockMultipartFile("file", "filenameDiff2.txt", "text/plain", "thisIsMockMultipartFileContent222222".getBytes());
+        appConfig.setUserFilePath("*\\$agb");
+
+        fileService.uploadFile(10014L, multipartFile2);
+
+    }
 }

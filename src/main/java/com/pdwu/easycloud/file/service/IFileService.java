@@ -2,6 +2,7 @@ package com.pdwu.easycloud.file.service;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -46,5 +47,10 @@ public interface IFileService {
      * @return
      */
     List<FileInfoBean> listUserFiles(Long userId, Integer status);
+
+
+    ResultBean uploadFile(Long userId, MultipartFile file) throws Exception;
+
+    FileInfoBean getFileInfoByMD5(String md5);
 
 }

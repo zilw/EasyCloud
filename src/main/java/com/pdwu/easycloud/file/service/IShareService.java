@@ -10,12 +10,13 @@ import java.util.List;
  */
 public interface IShareService {
     /**
-     * 新增一个文件分享信息
+     * 新增一个文件分享信息 （分享文件）
      *
-     * @param bean
+     * @param userId
+     * @param fileId
      * @return
      */
-    ResultBean insertShareInfo(ShareInfoBean bean);
+    ResultBean insertShareInfo(Long userId, Long fileId);
 
     /**
      * 删除分享信息（取消分享） （逻辑删除）

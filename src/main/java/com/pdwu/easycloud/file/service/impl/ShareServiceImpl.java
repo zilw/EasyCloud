@@ -6,6 +6,7 @@ import com.pdwu.easycloud.file.constant.ShareInfoConstant;
 import com.pdwu.easycloud.file.dao.ShareInfoDao;
 import com.pdwu.easycloud.file.service.IShareService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,10 +21,20 @@ public class ShareServiceImpl implements IShareService {
     @Autowired
     private ShareInfoDao shareInfoDao;
 
-    public ResultBean insertShareInfo(ShareInfoBean bean) {
-        if (bean == null) {
+    public ResultBean insertShareInfo(Long userId, Long fileId) {
+        if (userId == null || fileId == null) {
             return ResultBean.ARG_ERROR;
         }
+
+        ShareInfoBean bean = new ShareInfoBean();
+        bean.setUserId(userId);
+        bean.setFileId(fileId);
+        bean.setStatus(ShareInfoConstant.STATUS_NORMAL);
+
+        Date now = new Date();
+        bean.setCreateTime(now);
+        bean.setLastTime(now);
+
         int updated = shareInfoDao.insertShareInfo(bean);
 
         return updated == 1 ? ResultBean.success(bean) : ResultBean.fail("服务器错误");

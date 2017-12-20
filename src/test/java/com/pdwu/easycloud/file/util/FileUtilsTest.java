@@ -22,6 +22,13 @@ public class FileUtilsTest {
         String res = FileUtils.getFileMD5(mockMultipartFile);
         assertEquals("f6c64c2816e3a17d19aae8fe1d709359", res);
 
+        try {
+            FileUtils.getFileMD5(null);
+            fail(); //应有空指针异常
+        } catch (Exception e) {
+
+        }
+
     }
 
 }

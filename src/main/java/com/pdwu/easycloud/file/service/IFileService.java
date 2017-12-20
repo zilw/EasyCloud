@@ -48,9 +48,22 @@ public interface IFileService {
      */
     List<FileInfoBean> listUserFiles(Long userId, Integer status);
 
-
+    /**
+     * 上传文件
+     *
+     * @param userId
+     * @param file
+     * @return
+     * @throws Exception
+     */
     ResultBean uploadFile(Long userId, MultipartFile file) throws Exception;
 
+    /**
+     * 根据MD5查找是否已存在文件信息
+     *
+     * @param md5
+     * @return
+     */
     FileInfoBean getFileInfoByMD5(String md5);
 
 }

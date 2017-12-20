@@ -68,17 +68,9 @@ public class ShareServiceImplTest {
     @Test
     public void insertShareInfo() throws Exception {
         //arg
-        assertEquals(400, shareService.insertShareInfo(null).getCode());
+        assertEquals(400, shareService.insertShareInfo(null,null).getCode());
 
-        ShareInfoBean bean = new ShareInfoBean();
-        bean.setCreateTime(new Date());
-        bean.setLastTime(new Date());
-        bean.setUserId(10099L);
-        bean.setStatus(ShareInfoConstant.STATUS_NORMAL);
-        bean.setFileId(105L);
-        bean.setShareId(null);
-
-        assertEquals(200, shareService.insertShareInfo(bean).getCode());
+        assertEquals(200, shareService.insertShareInfo(10099L,105L).getCode());
     }
 
     @Test

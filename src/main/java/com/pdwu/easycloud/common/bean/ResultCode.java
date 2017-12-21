@@ -8,4 +8,5 @@ public class ResultCode {
     public static final int fail = 400;
     public static final int server_error = 500;
     public static final int not_found = 404;
+    public static final int unauthorized = 401;
 }

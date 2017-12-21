@@ -4,13 +4,16 @@ package com.pdwu.easycloud.common.bean;
  * Created by pdwu on 2017/11/22.
  */
 public class ResultBean {
-    private final String msg;
-    private final int code;
-    private final Object data;
+    private String msg;
+    private int code;
+    private Object data;
 
     //error
     public static final ResultBean ARG_ERROR = fail("参数异常");
     public static final ResultBean SERVER_ERROR = fail(ResultCode.server_error, "服务器异常");
+
+    public ResultBean() {
+    }
 
     public ResultBean(int code, Object data, String msg) {
         this.code = code;

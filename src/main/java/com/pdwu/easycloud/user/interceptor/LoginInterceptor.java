@@ -63,7 +63,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         PrintWriter writer = httpServletResponse.getWriter();
 
-        writer.write(JsonUtils.objectToJson(ResultBean.fail(403, "please login")));
+        writer.write(JsonUtils.objectToJson(ResultBean.fail(ResultCode.unauthorized, "please login")));
 
         return false;
 

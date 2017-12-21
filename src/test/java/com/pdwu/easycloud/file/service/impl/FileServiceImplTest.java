@@ -41,7 +41,6 @@ import static org.junit.Assert.*;
 //@TestPropertySource(locations = {"classpath:app/easycloud.properties"})
 public class FileServiceImplTest {
 
-
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
     @Autowired
@@ -159,6 +158,21 @@ public class FileServiceImplTest {
 
         Map<String, Object> param = new HashMap<String, Object>();
         FileInfoBean bean = fileService.getFileInfoByMD5("099b3b060154898840f0ebdfb46ec78f");
+        assertEquals(103L, bean.getFileId().longValue());
+        assertEquals(10012L, bean.getUserId().longValue());
+        assertEquals("/file/10012/", bean.getPath());
+        assertEquals("1513317967835.png", bean.getName());
+        assertEquals(1513317967830L, bean.getCreateTime().getTime());
+        assertEquals(1513317967830L, bean.getLastTime().getTime());
+    }
+
+    @Test
+    public void getFileInfoById() throws Exception {
+        //arg
+        assertNull(fileService.getFileInfoById(null));
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        FileInfoBean bean = fileService.getFileInfoById(103L);
         assertEquals(103L, bean.getFileId().longValue());
         assertEquals(10012L, bean.getUserId().longValue());
         assertEquals("/file/10012/", bean.getPath());

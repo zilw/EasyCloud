@@ -66,4 +66,12 @@ public interface IFileService {
      */
     FileInfoBean getFileInfoByMD5(String md5);
 
+    /**
+     * 根据fileId查找文件信息
+     *
+     * @param fileId
+     * @return
+     */
+    FileInfoBean getFileInfoById(Long fileId);
+
 }

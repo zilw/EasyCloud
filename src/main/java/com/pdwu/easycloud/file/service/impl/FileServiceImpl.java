@@ -163,6 +163,21 @@ public class FileServiceImpl implements IFileService {
         return list.get(0);
     }
 
+    public FileInfoBean getFileInfoById(Long fileId) {
+
+        if (fileId == null) {
+            return null;
+        }
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("fileId", fileId);
+        List<FileInfoBean> list = fileInfoDao.selectFileInfoList(param);
+        if (list == null || list.size() == 0) {
+            return null;
+        }
+        return list.get(0);
+    }
+
     private String generateFileName(String source) {
         // 使用时间戳命名
         String res = System.currentTimeMillis() + "";

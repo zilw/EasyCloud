@@ -118,7 +118,7 @@ public class ShareInfoDaoTest {
         assertEquals(101L, list.get(0).getFileInfo().getFileId().longValue());
         assertEquals(10011L, list.get(0).getFileInfo().getUserId().longValue());
         assertEquals(FileInfoConstant.STATUS_DELETE, list.get(0).getFileInfo().getStatus().intValue());
-        assertEquals("/file/10011/", list.get(0).getFileInfo().getPath());
+        assertEquals("/file/10011/", list.get(0).getFileInfo().getTruePath());
         assertEquals("1513317967830.png", list.get(0).getFileInfo().getName());
 
 

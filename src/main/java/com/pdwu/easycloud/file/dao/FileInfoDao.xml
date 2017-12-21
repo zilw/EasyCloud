@@ -7,7 +7,7 @@
         <id column="FILE_ID" property="fileId"/>
         <result column="USER_ID" property="userId"/>
         <result column="MD5" property="md5"/>
-        <result column="PATH" property="path"/>
+        <result column="PATH" property="truePath"/>
         <result column="NAME" property="name"/>
         <result column="SIZE" property="size"/>
         <result column="STATUS" property="status"/>
@@ -20,7 +20,7 @@
             useGeneratedKeys="true" keyProperty="fileId">
 
         INSERT INTO file_info (USER_ID, MD5, PATH, NAME, SIZE, STATUS, CREATE_TIME, LAST_TIME)
-            VALUE (#{userId}, #{md5}, #{path}, #{name}, #{size}, #{status}, #{createTime}, #{lastTime})
+            VALUE (#{userId}, #{md5}, #{truePath}, #{name}, #{size}, #{status}, #{createTime}, #{lastTime})
 
     </insert>
 

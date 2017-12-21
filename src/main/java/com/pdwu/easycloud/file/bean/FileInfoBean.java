@@ -1,16 +1,19 @@
 package com.pdwu.easycloud.file.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 /**
  * Created by pdwu on 2017/12/18.
  */
+@JsonIgnoreProperties(value = {"truePath"})
 public class FileInfoBean {
 
     private Long fileId;
     private Long userId;
     private String md5;
-    private String path;
+    private String truePath;    //服务器保存文件的真实路径
     private String name;
     private Long size;
     private Integer status;
@@ -49,12 +52,12 @@ public class FileInfoBean {
         this.md5 = md5;
     }
 
-    public String getPath() {
-        return path;
+    public String getTruePath() {
+        return truePath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setTruePath(String truePath) {
+        this.truePath = truePath;
     }
 
     public String getName() {
@@ -95,7 +98,7 @@ public class FileInfoBean {
                 "fileId=" + fileId +
                 ", userId=" + userId +
                 ", md5='" + md5 + '\'' +
-                ", path='" + path + '\'' +
+                ", truePath='" + truePath + '\'' +
                 ", name='" + name + '\'' +
                 ", status=" + status +
                 ", createTime=" + createTime +

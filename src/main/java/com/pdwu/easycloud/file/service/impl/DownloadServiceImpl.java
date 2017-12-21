@@ -56,7 +56,7 @@ public class DownloadServiceImpl implements IDownloadService {
     }
 
     private ResultBean getDownloadResult(FileInfoBean fileInfoBean) {
-        File file = new File(fileInfoBean.getPath());
+        File file = new File(fileInfoBean.getTruePath());
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("fileInfo", fileInfoBean);

@@ -7,7 +7,6 @@ import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
-import net.bytebuddy.implementation.bytecode.constant.FieldConstant;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,7 +64,7 @@ public class FileInfoDaoTest {
         bean.setLastTime(new Date());
         bean.setMd5("7b8b965ad4bca0e41ab51de7b31363a1");
         bean.setName("1513317967899.png");
-        bean.setPath("/file/10099/");
+        bean.setTruePath("/file/10099/");
         bean.setUserId(10099L);
         bean.setStatus(FileInfoConstant.STATUS_NORMAL);
         bean.setFileId(null);
@@ -100,7 +99,7 @@ public class FileInfoDaoTest {
         List<FileInfoBean> list2 = fileInfoDao.selectFileInfoList(param);
         assertEquals(103L, list2.get(0).getFileId().longValue());
         assertEquals(10012L, list2.get(0).getUserId().longValue());
-        assertEquals("/file/10012/", list2.get(0).getPath());
+        assertEquals("/file/10012/", list2.get(0).getTruePath());
         assertEquals("1513317967835.png", list2.get(0).getName());
         assertEquals(100L, list2.get(0).getSize().longValue());
         assertEquals(1513317967830L, list2.get(0).getCreateTime().getTime());
@@ -112,7 +111,7 @@ public class FileInfoDaoTest {
         List<FileInfoBean> list3 = fileInfoDao.selectFileInfoList(param);
         assertEquals(103L, list3.get(0).getFileId().longValue());
         assertEquals(10012L, list3.get(0).getUserId().longValue());
-        assertEquals("/file/10012/", list3.get(0).getPath());
+        assertEquals("/file/10012/", list3.get(0).getTruePath());
         assertEquals("1513317967835.png", list3.get(0).getName());
         assertEquals(1513317967830L, list3.get(0).getCreateTime().getTime());
         assertEquals(1513317967830L, list3.get(0).getLastTime().getTime());

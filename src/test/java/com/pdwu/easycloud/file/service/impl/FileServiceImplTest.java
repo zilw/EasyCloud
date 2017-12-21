@@ -16,10 +16,8 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,7 +81,7 @@ public class FileServiceImplTest {
         bean.setLastTime(new Date());
         bean.setMd5("7b8b965ad4bca0e41ab51de7b31363a1");
         bean.setName("1513317967899.png");
-        bean.setPath("/file/10099/");
+        bean.setTruePath("/file/10099/");
         bean.setUserId(10099L);
         bean.setStatus(FileInfoConstant.STATUS_NORMAL);
         bean.setFileId(null);
@@ -160,7 +158,7 @@ public class FileServiceImplTest {
         FileInfoBean bean = fileService.getFileInfoByMD5("099b3b060154898840f0ebdfb46ec78f");
         assertEquals(103L, bean.getFileId().longValue());
         assertEquals(10012L, bean.getUserId().longValue());
-        assertEquals("/file/10012/", bean.getPath());
+        assertEquals("/file/10012/", bean.getTruePath());
         assertEquals("1513317967835.png", bean.getName());
         assertEquals(1513317967830L, bean.getCreateTime().getTime());
         assertEquals(1513317967830L, bean.getLastTime().getTime());
@@ -175,7 +173,7 @@ public class FileServiceImplTest {
         FileInfoBean bean = fileService.getFileInfoById(103L);
         assertEquals(103L, bean.getFileId().longValue());
         assertEquals(10012L, bean.getUserId().longValue());
-        assertEquals("/file/10012/", bean.getPath());
+        assertEquals("/file/10012/", bean.getTruePath());
         assertEquals("1513317967835.png", bean.getName());
         assertEquals(1513317967830L, bean.getCreateTime().getTime());
         assertEquals(1513317967830L, bean.getLastTime().getTime());
@@ -206,7 +204,7 @@ public class FileServiceImplTest {
         assertEquals(200, bean1.getCode());
         assertEquals("filenameDiff.txt", fileInfoBean1.getName());
         assertNotNull(fileInfoBean1.getCreateTime());
-        assertEquals(fileInfoBean.getPath(), fileInfoBean1.getPath()); //真实地址应该相同
+        assertEquals(fileInfoBean.getTruePath(), fileInfoBean1.getTruePath()); //真实地址应该相同
 
     }
 

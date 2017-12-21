@@ -113,7 +113,7 @@ public class FileServiceImpl implements IFileService {
         try {
             FileInfoBean tempFileInfo = this.getFileInfoByMD5(uploadedFileMD5);
             if (tempFileInfo != null) {//服务器中已存在该文件
-                path = tempFileInfo.getPath();
+                path = tempFileInfo.getTruePath();
 
             } else { //不存在则保存文件
                 String toSaveFileName = generateFileName(uploadedFileName);
@@ -134,7 +134,7 @@ public class FileServiceImpl implements IFileService {
         bean.setName(uploadedFileName);
         bean.setStatus(FileInfoConstant.STATUS_NORMAL);
         bean.setUserId(userId);
-        bean.setPath(path);
+        bean.setTruePath(path);
         bean.setMd5(uploadedFileMD5);
         Date now = new Date();
         bean.setCreateTime(now);

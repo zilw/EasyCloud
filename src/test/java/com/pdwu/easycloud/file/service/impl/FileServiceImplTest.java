@@ -211,11 +211,10 @@ public class FileServiceImplTest {
     public void uploadFileException() throws Exception {
 
         expectedException.expect(IOException.class);    //期望的异常
-        expectedException.expectMessage("Directory '*' could not be created");
 
         //目录配置错误导致异常
         MultipartFile multipartFile2 = new MockMultipartFile("file", "filenameDiff2.txt", "text/plain", "thisIsMockMultipartFileContent222222".getBytes());
-        appConfig.setUserFilePath("*\\$agb");
+        appConfig.setUserFilePath("*\\/$agb");
 
         fileService.uploadFile(10014L, multipartFile2);
 

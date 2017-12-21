@@ -139,7 +139,7 @@ public class FileServiceImpl implements IFileService {
         Date now = new Date();
         bean.setCreateTime(now);
         bean.setLastTime(now);
-        //TODO setSize
+        bean.setSize(uploadedFileSize);
 
         ResultBean insertResult = this.insertFileInfo(bean);
         if (insertResult.getCode() != ResultCode.ok) {

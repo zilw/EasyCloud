@@ -48,11 +48,11 @@ public class ShareInfoDaoTest {
         Operation operation = sequenceOf(
                 Operations.deleteAllFrom("file_info", "share_info"),
                 Operations.insertInto("file_info")
-                        .columns("FILE_ID", "USER_ID", "MD5", "PATH", "NAME", "STATUS", "CREATE_TIME", "LAST_TIME")
-                        .values(101L, 10011L, "793914c9c583d9d86d0f4ed8c521b0c1", "/file/10011/", "1513317967830.png", FileInfoConstant.STATUS_DELETE, new Date(1513317967830L), new Date(1513317967830L))
-                        .values(102L, 10011L, "c28cbd398a61e9022fd6a6835a57dc50", "/file/10011/", "1513317967833.zip", FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
-                        .values(103L, 10012L, "099b3b060154898840f0ebdfb46ec78f", "/file/10012/", "1513317967835.png", FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
-                        .values(104L, 10013L, "3b060154898840f0ebdfb46ec78f099b", "/file/10013/", "1513317967888.png", FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
+                        .columns("FILE_ID", "USER_ID", "MD5", "PATH", "NAME", "SIZE","STATUS", "CREATE_TIME", "LAST_TIME")
+                        .values(101L, 10011L, "793914c9c583d9d86d0f4ed8c521b0c1", "/file/10011/", "1513317967830.png", 100L, FileInfoConstant.STATUS_DELETE, new Date(1513317967830L), new Date(1513317967830L))
+                        .values(102L, 10011L, "c28cbd398a61e9022fd6a6835a57dc50", "/file/10011/", "1513317967833.zip", 100L, FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
+                        .values(103L, 10012L, "099b3b060154898840f0ebdfb46ec78f", "/file/10012/", "1513317967835.png", 100L, FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
+                        .values(104L, 10013L, "3b060154898840f0ebdfb46ec78f099b", "/file/10013/", "1513317967888.png", 100L, FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
                         .build(),
                 Operations.insertInto("share_info")
                         .columns("SHARE_ID", "FILE_ID", "USER_ID", "STATUS", "CREATE_TIME", "LAST_TIME")

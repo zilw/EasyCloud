@@ -12,9 +12,18 @@ public class FileInfoBean {
     private String md5;
     private String path;
     private String name;
+    private Long size;
     private Integer status;
     private Date createTime;
     private Date lastTime;
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
 
     public Long getFileId() {
         return fileId;

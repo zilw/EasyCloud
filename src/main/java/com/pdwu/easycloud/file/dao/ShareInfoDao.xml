@@ -20,7 +20,7 @@
             useGeneratedKeys="true" keyProperty="shareId">
 
         INSERT INTO share_info (USER_ID, FILE_ID, STATUS, CREATE_TIME, LAST_TIME)
-            VALUE (#{userId}, #{fileId}, #{status}, #{createTime}, #{lastTime})
+            VALUES (#{userId}, #{fileId}, #{status}, #{createTime}, #{lastTime})
 
     </insert>
 

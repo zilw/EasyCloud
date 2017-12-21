@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
 public class UserServiceImplTest {
 
 
@@ -135,7 +135,7 @@ public class UserServiceImplTest {
 
         //userId不存在
         param.clear();
-        param.put("userId", "nothisId");
+        param.put("userId", 9999L);
         UserBean bean2 = userService.getUserInfo(param);
         assertNull(null, bean2);
 

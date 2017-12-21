@@ -35,8 +35,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml"})
-//@TestPropertySource(locations = {"classpath:app/easycloud.properties"})
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
 public class FileServiceImplTest {
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();

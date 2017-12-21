@@ -20,7 +20,7 @@
             useGeneratedKeys="true" keyProperty="fileId">
 
         INSERT INTO file_info (USER_ID, MD5, PATH, NAME, SIZE, STATUS, CREATE_TIME, LAST_TIME)
-            VALUE (#{userId}, #{md5}, #{truePath}, #{name}, #{size}, #{status}, #{createTime}, #{lastTime})
+            VALUES (#{userId}, #{md5}, #{truePath}, #{name}, #{size}, #{status}, #{createTime}, #{lastTime})
 
     </insert>
 

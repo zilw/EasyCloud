@@ -13,7 +13,7 @@
 
     <insert id="insertToken" parameterType="com.pdwu.easycloud.user.bean.TokenBean">
         INSERT INTO user_token (USER_ID, TOKEN, CREATE_TIME, LAST_TIME, STATUS)
-            VALUE (#{userId}, #{token}, #{createTime}, #{lastTime}, #{status})
+            VALUES (#{userId}, #{token}, #{createTime}, #{lastTime}, #{status})
 
     </insert>
 

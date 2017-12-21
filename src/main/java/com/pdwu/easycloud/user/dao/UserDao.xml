@@ -62,7 +62,7 @@
     <insert id="insertUser" parameterType="com.pdwu.easycloud.user.bean.UserBean" useGeneratedKeys="true" keyProperty="userId">
 
         INSERT INTO USER_INFO (ACCOUNT, PASSWORD, CREATE_TIME, LAST_TIME)
-            VALUE (#{account}, #{password}, #{createTime}, #{lastTime})
+            VALUES (#{account}, #{password}, #{createTime}, #{lastTime})
 
     </insert>
 

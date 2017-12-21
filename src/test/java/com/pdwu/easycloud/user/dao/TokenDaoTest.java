@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -27,8 +28,8 @@ import static org.junit.Assert.*;
  * Created by pdwu on 2017/12/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml"})
+@WebAppConfiguration("src/test/resources")
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
 public class TokenDaoTest {
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();

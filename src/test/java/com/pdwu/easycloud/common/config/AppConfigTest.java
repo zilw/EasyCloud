@@ -27,6 +27,7 @@ public class AppConfigTest {
         System.out.println(appConfig.getUserFilePath());
 
         new AppConfig();
+        new AppConfig().setUserFilePath("");
     }
 
 

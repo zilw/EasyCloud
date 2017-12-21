@@ -57,7 +57,7 @@ public class FileServiceImpl implements IFileService {
 
         int updated = fileInfoDao.updateFileInfo(param);
 
-        return updated == 1 ? ResultBean.success("") : ResultBean.fail("服务器错误");
+        return ResultBean.success("");
     }
 
     public ResultBean deleteFileInfo(Long fileId) {

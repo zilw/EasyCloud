@@ -1,5 +1,6 @@
 package com.pdwu.easycloud.file.controller;
 
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.service.IShareService;
 import com.pdwu.easycloud.file.service.IShortLinkService;
@@ -56,12 +57,12 @@ public class PublicShareControllerTest {
         Mockito.when(shareService.getShareFileInfoById(456L)).thenReturn(new ShareInfoBean());
 
         //文件已取消分享或不存在
-        mockMvc.perform(get("/share/shortlinkabc"))
+        mockMvc.perform(get(AppConfig.API_PUB_SHARE + "/shortlinkabc"))
                 .andDo(print())
                 .andExpect(jsonPath("$.code", is(404)));
 
         //正常
-        mockMvc.perform(get("/share/shortlinkefg"))
+        mockMvc.perform(get(AppConfig.API_PUB_SHARE + "/shortlinkefg"))
                 .andDo(print())
                 .andExpect(jsonPath("$.code", is(200)));
 

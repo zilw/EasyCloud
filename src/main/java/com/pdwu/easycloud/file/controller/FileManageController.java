@@ -1,6 +1,7 @@
 package com.pdwu.easycloud.file.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
 import com.pdwu.easycloud.file.service.IFileService;
@@ -23,7 +24,6 @@ import java.util.Map;
  * Created by pdwu on 2017/12/19.
  */
 @Controller
-@RequestMapping(value = "/api/file")
 public class FileManageController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -34,7 +34,7 @@ public class FileManageController {
     @Autowired
     private IShareService shareService;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_FILE_UPLOAD, method = RequestMethod.POST)
     @ResponseBody
     public Object uploadFile(HttpServletRequest request, @RequestParam MultipartFile file) {
 
@@ -59,7 +59,7 @@ public class FileManageController {
         return resultBean;
     }
 
-    @RequestMapping(value = "/list")
+    @RequestMapping(value = AppConfig.API_FILE_LIST)
     @ResponseBody
     public Object listMyFiles(HttpServletRequest request) {
 
@@ -74,7 +74,7 @@ public class FileManageController {
         return ResultBean.success(map);
     }
 
-    @RequestMapping(value = "/rename", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_FILE_RENAME, method = RequestMethod.POST)
     @ResponseBody
     public Object rename(HttpServletRequest request, @RequestParam Long fileId, @RequestParam String filename) {
         //TODO 限制文件名长度
@@ -82,7 +82,7 @@ public class FileManageController {
 
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_FILE_DELETE, method = RequestMethod.POST)
     @ResponseBody
     public Object delete(HttpServletRequest request, @RequestParam Long fileId) {
 
@@ -90,7 +90,7 @@ public class FileManageController {
 
     }
 
-    @RequestMapping(value = "/share", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_FILE_SHARE, method = RequestMethod.POST)
     @ResponseBody
     public Object share(HttpServletRequest request, @RequestParam Long fileId) {
 
@@ -99,7 +99,7 @@ public class FileManageController {
         return shareService.insertShareInfo(userId, fileId);
     }
 
-    @RequestMapping(value = "/cancelShare", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_FILE_CANCEL_SHARE, method = RequestMethod.POST)
     @ResponseBody
     public Object cancelShare(HttpServletRequest request, @RequestParam Long shareId) {
 

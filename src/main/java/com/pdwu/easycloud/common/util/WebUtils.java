@@ -10,12 +10,12 @@ import java.util.List;
 public class WebUtils {
 
     private static String[] pubUris = new String[]{
-            "/pub.*",
+            "/api/pub.*",
             "/error.*",
-            "/login.*",
-            "/register.*",
-            "/static.*",
-            "/share.*"
+            "/api/login.*",
+            "/api/register.*",
+            "/api/logout.*",
+            "/static.*"
     };
 
     public static boolean checkUriPublic(String uri) {

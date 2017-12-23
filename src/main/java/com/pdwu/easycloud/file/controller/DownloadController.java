@@ -3,6 +3,7 @@ package com.pdwu.easycloud.file.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.service.IDownloadService;
@@ -32,7 +33,7 @@ public class DownloadController {
     @Autowired
     private IDownloadService downloadService;
 
-    @RequestMapping(value = "/download")
+    @RequestMapping(value = AppConfig.API_PUB_DOWNLOAD)
     public void download(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Long userId = (Long) request.getSession().getAttribute("userId");

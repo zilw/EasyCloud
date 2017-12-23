@@ -2,6 +2,7 @@ package com.pdwu.easycloud.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.user.bean.UserBean;
 import com.pdwu.easycloud.user.service.IUserService;
@@ -80,7 +81,7 @@ public class UserControllerTest {
         });
 
         //发起请求 登录成功
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/login", "xiaoming", "xiaomingPsd"))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_LOGIN, "xiaoming", "xiaomingPsd"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(200)))
@@ -89,15 +90,15 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.createTime", is(1513317967850L)));
 
         //密码错误
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/login", "xiaoming", "errorPsd"))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_LOGIN, "xiaoming", "errorPsd"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
 
         //用户名/密码为空
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/login", "", ""))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_LOGIN, "", ""))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/login", "oooo", ""))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_LOGIN, "oooo", ""))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
 
@@ -108,7 +109,7 @@ public class UserControllerTest {
         //注册失败
         Mockito.when(userService.register("zhangsan", "zhansanPsd")).thenReturn(ResultBean.fail("账号已存在"));
 
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/register", "zhangsan", "zhansanPsd"))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_REGISTER, "zhangsan", "zhansanPsd"))
                 .andDo(MockMvcResultHandlers.log())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)))
@@ -117,16 +118,16 @@ public class UserControllerTest {
 
         //注册成功
         Mockito.when(userService.register("lisi", "lisiPsd")).thenReturn(ResultBean.success("注册成功"));
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/register", "lisi", "lisiPsd"))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_REGISTER, "lisi", "lisiPsd"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(200)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data", equalTo("注册成功")));
 
         //用户名/密码为空
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/register", "", ""))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_REGISTER, "", ""))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
-        mockMvc.perform(getPostRequestWithAccountAndPassword("/register", "faf", ""))
+        mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_REGISTER, "faf", ""))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
 
@@ -136,11 +137,11 @@ public class UserControllerTest {
     public void logout() throws Exception {
         Mockito.when(userService.logout("token1233")).thenReturn(ResultBean.success(""));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/logout").param("token", "token1233"))
+        mockMvc.perform(MockMvcRequestBuilders.get(AppConfig.API_LOGOUT).param("token", "token1233"))
                 .andDo(MockMvcResultHandlers.log())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(200)));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/logout").param("token", ""))
+        mockMvc.perform(MockMvcRequestBuilders.get(AppConfig.API_LOGOUT).param("token", ""))
                 .andDo(MockMvcResultHandlers.log())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
     }

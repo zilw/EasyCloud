@@ -101,7 +101,7 @@ public class FileServiceImplTest {
         assertEquals(200, fileService.updateFileName(101L, "ooop.jpg").getCode());
 
         //fileId不存在
-        assertEquals(400, fileService.updateFileName(1000L, "xxx.png").getCode());
+        assertEquals(400, fileService.updateFileName(1007770L, "xxx.png").getCode());
 
     }
 

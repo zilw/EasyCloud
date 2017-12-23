@@ -60,8 +60,8 @@ public class LoginInterceptorTest {
             }
         });
 
-        String pubUri = "/pub/xxx";//公共uri
-        String apiUri = "/api/xxx";//需要登录的uri
+        String pubUri = "/api/pub/xxx";//公共uri
+        String apiUri = "/api/usr/xxx";//需要登录的uri
 
         //1.1 不带token访问需要登录的api     (禁止)
         MockHttpServletResponse response = new MockHttpServletResponse();

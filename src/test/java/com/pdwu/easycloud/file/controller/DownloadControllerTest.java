@@ -1,6 +1,7 @@
 package com.pdwu.easycloud.file.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.service.IDownloadService;
 import org.junit.Before;
@@ -68,7 +69,7 @@ public class DownloadControllerTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", 1L);
 
-        mockMvc.perform(get("/download")
+        mockMvc.perform(get(AppConfig.API_PUB_DOWNLOAD)
                 .session(session)
                 .param("fileId", "1")
                 .param("shareId", "1"))
@@ -76,7 +77,7 @@ public class DownloadControllerTest {
                 .andExpect(jsonPath("$.code", is(404)))
                 .andExpect(jsonPath("$.msg", equalTo("notfound中文不乱码")));
 
-        mockMvc.perform(get("/download")
+        mockMvc.perform(get(AppConfig.API_PUB_DOWNLOAD)
                 .session(session)
                 .param("fileId", "")
                 .param("shareId", ""))
@@ -96,13 +97,13 @@ public class DownloadControllerTest {
         map.put("file", file);
         Mockito.when(downloadService.download(1L, 2L, 3L, null)).thenReturn(ResultBean.success(map));
 
-        mockMvc.perform(get("/download")
+        mockMvc.perform(get(AppConfig.API_PUB_DOWNLOAD)
                 .session(session)
                 .param("fileId", "2")
                 .param("shareId", "3"))
                 .andDo(print())
                 .andExpect(status().is(200));
-        
+
         file.deleteOnExit();
 
     }

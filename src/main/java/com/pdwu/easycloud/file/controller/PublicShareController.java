@@ -2,6 +2,7 @@ package com.pdwu.easycloud.file.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.service.IShareService;
 import com.pdwu.easycloud.file.service.IShortLinkService;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by pdwu on 2017/12/20.
  */
 @Controller
-@RequestMapping(value = "/share")
+@RequestMapping(value = AppConfig.API_PUB_SHARE)
 public class PublicShareController {
 
     @Autowired

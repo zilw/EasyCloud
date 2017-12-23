@@ -19,10 +19,10 @@ public class WebUtilsTest {
 
         assertTrue(!WebUtils.checkUriPublic(""));
 
-        assertTrue(WebUtils.checkUriPublic("/pub"));
-        assertTrue(WebUtils.checkUriPublic("/pube"));
-        assertTrue(WebUtils.checkUriPublic("/pub/asdf"));
-        assertTrue(WebUtils.checkUriPublic("/pub/f/ff"));
+        assertTrue(WebUtils.checkUriPublic("/api/pub"));
+        assertTrue(WebUtils.checkUriPublic("/api/pube"));
+        assertTrue(WebUtils.checkUriPublic("/api/pub/asdf"));
+        assertTrue(WebUtils.checkUriPublic("/api/pub/f/ff"));
 
     }
 

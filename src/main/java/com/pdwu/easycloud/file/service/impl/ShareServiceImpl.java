@@ -51,7 +51,7 @@ public class ShareServiceImpl implements IShareService {
 
         int updated = shareInfoDao.updateShareInfoStatus(param);
 
-        return updated == 1 ? ResultBean.success("") : ResultBean.fail("服务器错误");
+        return updated == 1 ? ResultBean.success("") : ResultBean.fail("不存在该分享");
     }
 
     public ShareInfoBean getShareFileInfoById(Long shareId) {

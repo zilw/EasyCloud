@@ -20,16 +20,20 @@ EasyCloud是一个简易的文件分享平台，后端正在完善中。
 
 ### 接口概览  
 
-|  模块  |          描述          |        请求路径       | 方法 | 参数 | 返回 | 备注 |
-|:------:|:----------------------:|:---------------------:|:----:|:----:|:----:|:----:|
-|  用户  |          登录          | /login                | POST |      |      |      |
-|        |          注册          | /register             | POST |      |      |      |
-|  文件  |        上传文件        | /api/file/upload      | POST |      |      |      |
-|        |   获取用户的文件列表   | /api/file/list        |  GET |      |      |      |
-|        |       修改文件名       | /api/file/rename      | POST |      |      |      |
-|        |        删除文件        | /api/file/delete      | POST |      |      |      |
-|        |        分享文件        | /api/file/share       | POST |      |      |      |
-|        |        取消分享        | /api/file/cancelShare | POST |      |      |      |
-|  下载  |        下载文件        | /download             |  GET |      |      |      |
-| 分享页 | 文件分享页面（短链接） | /share/{shortlink}    |  GET |      |      |      |
-|        |                        |                       |      |      |      |      |
+| 模块 |          描述          | 请求路径                   | 方法 | 参数 | 返回 | 备注 |
+|:----:|:----------------------:|----------------------------|:----:|:----:|:----:|:----:|
+| 用户 |          登录          | /api/pub/login             | POST |      |      |      |
+|      |          注册          | /api/pub/register          | POST |      |      |      |
+|      |          注销          | /api/pub/logout            | GET  |      |      |      |
+| 文件 |        上传文件        | /api/usr/file/upload       | POST |      |      |      |
+|      |   获取用户的文件列表   | /api/usr/file/list         |  GET |      |      |      |
+|      |       修改文件名       | /api/usr/file/rename       | POST |      |      |      |
+|      |        删除文件        | /api/usr/file/delete       | POST |      |      |      |
+|      |        分享文件        | /api/usr/file/share        | POST |      |      |      |
+|      |        取消分享        | /api/usr/file/cancelShare  | POST |      |      |      |
+| 下载 |        下载文件        | /api/pub/download          |  GET |      |      |      |
+| 分享 | 文件分享页面（短链接） | /api/pub/share/{shortlink} |  GET |      |      |      |
+|      |                        |                            |      |      |      |      |
+
+
+（待完善）

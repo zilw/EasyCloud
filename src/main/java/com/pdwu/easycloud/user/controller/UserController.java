@@ -1,6 +1,7 @@
 package com.pdwu.easycloud.user.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.user.bean.UserBean;
 import com.pdwu.easycloud.user.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_LOGIN, method = RequestMethod.POST)
     @ResponseBody
     public Object login(@RequestBody Map<String, String> requestMap) {
 
@@ -45,7 +46,7 @@ public class UserController {
         return ResultBean.success(bean);
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = AppConfig.API_REGISTER, method = RequestMethod.POST)
     @ResponseBody
     public Object register(@RequestBody Map<String, String> requestMap) {
 
@@ -61,7 +62,7 @@ public class UserController {
         return this.userService.register(requestMap.get("account"), requestMap.get("password"));
     }
 
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = AppConfig.API_LOGOUT)
     @ResponseBody
     public Object logout(@RequestParam String token) {
         if (StringUtils.isBlank(token)) {

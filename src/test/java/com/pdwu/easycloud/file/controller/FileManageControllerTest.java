@@ -1,6 +1,7 @@
 package com.pdwu.easycloud.file.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
 import com.pdwu.easycloud.file.service.IFileService;
@@ -67,7 +68,7 @@ public class FileManageControllerTest {
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", 1001L);
-        mockMvc.perform(fileUpload("/api/file/upload").file(file)
+        mockMvc.perform(fileUpload(AppConfig.API_FILE_UPLOAD).file(file)
                 .session(session))
                 .andDo(print())
                 .andExpect(status().is(200))
@@ -89,7 +90,7 @@ public class FileManageControllerTest {
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", 1001L);
-        mockMvc.perform(get("/api/file/list").session(session))
+        mockMvc.perform(get(AppConfig.API_FILE_LIST).session(session))
                 .andDo(print())
                 .andExpect(jsonPath("$.data.userId", equalTo(1001)))
                 .andExpect(jsonPath("$.data.list.length()", is(2)));
@@ -99,12 +100,12 @@ public class FileManageControllerTest {
     public void rename() throws Exception {
         Mockito.when(fileService.updateFileName(111L, "xx.jpg")).thenReturn(ResultBean.fail(""));
 
-        mockMvc.perform(post("/api/file/rename").param("fileId", "111")
+        mockMvc.perform(post(AppConfig.API_FILE_RENAME).param("fileId", "111")
                 .param("filename", "xx.jpg"))
                 .andExpect(jsonPath("$.code", is(400)));
 
         //不能Get
-        mockMvc.perform(get("/api/file/rename").param("fileId", "111")
+        mockMvc.perform(get(AppConfig.API_FILE_RENAME).param("fileId", "111")
                 .param("filename", "xx.jpg"))
                 .andExpect(status().is(405));
 
@@ -116,11 +117,11 @@ public class FileManageControllerTest {
         Mockito.when(fileService.deleteFileInfo(123L)).thenReturn(ResultBean.fail(""));
 
 
-        mockMvc.perform(post("/api/file/delete").param("fileId", "123"))
+        mockMvc.perform(post(AppConfig.API_FILE_DELETE).param("fileId", "123"))
                 .andDo(print())
                 .andExpect(jsonPath("$.code", is(400)));
 
-        mockMvc.perform(get("/api/file/delete").param("fileId", "123"))
+        mockMvc.perform(get(AppConfig.API_FILE_DELETE).param("fileId", "123"))
                 .andExpect(status().is(405));
 
     }
@@ -132,12 +133,12 @@ public class FileManageControllerTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", 1001L);
 
-        mockMvc.perform(post("/api/file/share").param("fileId", "123")
+        mockMvc.perform(post(AppConfig.API_FILE_SHARE).param("fileId", "123")
                 .session(session))
                 .andDo(print())
                 .andExpect(jsonPath("$.code", is(400)));
 
-        mockMvc.perform(get("/api/file/share").param("fileId", "123"))
+        mockMvc.perform(get(AppConfig.API_FILE_SHARE).param("fileId", "123"))
                 .andExpect(status().is(405));
 
     }
@@ -146,11 +147,11 @@ public class FileManageControllerTest {
     public void cancelShare() throws Exception {
         Mockito.when(shareService.deleteShareInfo(111L)).thenReturn(ResultBean.success(""));
 
-        mockMvc.perform(post("/api/file/cancelShare").param("shareId", "111"))
+        mockMvc.perform(post(AppConfig.API_FILE_CANCEL_SHARE).param("shareId", "111"))
                 .andDo(print())
                 .andExpect(jsonPath("$.code", is(200)));
 
-        mockMvc.perform(get("/api/file/cancelShare").param("shareId", "111"))
+        mockMvc.perform(get(AppConfig.API_FILE_CANCEL_SHARE).param("shareId", "111"))
                 .andDo(print())
                 .andExpect(status().is(405));
 

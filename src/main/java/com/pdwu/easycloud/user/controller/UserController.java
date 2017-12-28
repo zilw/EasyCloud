@@ -2,7 +2,9 @@ package com.pdwu.easycloud.user.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.config.AppConfig;
+import com.pdwu.easycloud.user.bean.TokenBean;
 import com.pdwu.easycloud.user.bean.UserBean;
+import com.pdwu.easycloud.user.constant.TokenConstant;
 import com.pdwu.easycloud.user.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -12,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -27,7 +32,7 @@ public class UserController {
 
     @RequestMapping(value = AppConfig.API_LOGIN, method = RequestMethod.POST)
     @ResponseBody
-    public Object login(@RequestBody Map<String, String> requestMap) {
+    public Object login(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, String> requestMap) {
 
         String account = requestMap.get("account");
         if (StringUtils.isBlank(account)) {
@@ -42,6 +47,10 @@ public class UserController {
         if (bean == null) {
             return ResultBean.fail("账户不存在或密码错误！");
         }
+
+        Cookie cookie = new Cookie(TokenConstant.COOKIE_NAME, bean.getToken());
+        cookie.setMaxAge(TokenConstant.OVERDUE_TIME_SECOND);
+        response.addCookie(cookie);
 
         return ResultBean.success(bean);
     }

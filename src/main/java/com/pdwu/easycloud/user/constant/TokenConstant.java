@@ -6,7 +6,10 @@ package com.pdwu.easycloud.user.constant;
 public class TokenConstant {
 
     //token过期时间（单位：秒）
-    public static final int OVERDUE_TIME = 7200;
+    public static final int OVERDUE_TIME_SECOND = 7200;
+
+    public static final String COOKIE_NAME = "token";
+
 
     //token状态： 正常
     public static final int STATUS_NORMAL = 0;

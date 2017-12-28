@@ -15,7 +15,7 @@ public class TokenUtils {
         long d = System.currentTimeMillis() - bean.getCreateTime().getTime();
         d = d / 1000;
 
-        return d > TokenConstant.OVERDUE_TIME;
+        return d > TokenConstant.OVERDUE_TIME_SECOND;
 
     }
 

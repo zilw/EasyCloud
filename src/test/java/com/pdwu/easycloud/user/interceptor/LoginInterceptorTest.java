@@ -79,7 +79,7 @@ public class LoginInterceptorTest {
         //2.1 带合法token访问需要登录的api    （通过，并放入用户信息）
         MockHttpServletRequest request21 = new MockHttpServletRequest("GET", apiUri);
         MockHttpServletResponse response21 = new MockHttpServletResponse();
-        request21.setParameter("token", "token222");
+        request21.addHeader("Authorization", "token222");
 
         assertEquals(true, loginInterceptor.preHandle(request21, response21, null));
         assertEquals(1233L, request21.getSession().getAttribute("userId"));
@@ -88,7 +88,7 @@ public class LoginInterceptorTest {
         //2.2 带合法token访问公共api         （通过，并放入用户信息）
         MockHttpServletRequest request22 = new MockHttpServletRequest("GET", pubUri);
         MockHttpServletResponse response22 = new MockHttpServletResponse();
-        request22.setParameter("token", "token222");
+        request22.addHeader("Authorization", "token222");
 
         assertEquals(true, loginInterceptor.preHandle(request22, response22, null));
         assertEquals(1233L, request22.getSession().getAttribute("userId"));
@@ -96,7 +96,7 @@ public class LoginInterceptorTest {
         //3.1 带无效token访问需要登录的api    （禁止）
         MockHttpServletRequest request31 = new MockHttpServletRequest("GET", apiUri);
         MockHttpServletResponse response31 = new MockHttpServletResponse();
-        request31.setParameter("token", "token111");
+        request31.addHeader("authorization", "token111");   //大小写都ok
 
         assertEquals(false, loginInterceptor.preHandle(request31, response31, null));
         ResultBean resultBean31 = JsonUtils.jsonToResultBean(response31.getContentAsString());
@@ -105,7 +105,7 @@ public class LoginInterceptorTest {
         //3.2 带无效token访问公共api           （通过，没有用户信息）
         MockHttpServletRequest request32 = new MockHttpServletRequest("GET", pubUri);
         MockHttpServletResponse response32 = new MockHttpServletResponse();
-        request32.setParameter("token", "token111");
+        request32.addHeader("Authorization", "token111");
 
         assertEquals(true, loginInterceptor.preHandle(request32, response32, null));
         assertEquals(null, request32.getSession().getAttribute("userId"));

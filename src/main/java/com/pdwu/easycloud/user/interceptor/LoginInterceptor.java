@@ -5,8 +5,11 @@ import com.pdwu.easycloud.common.bean.ResultCode;
 import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.common.util.WebUtils;
 import com.pdwu.easycloud.user.bean.TokenBean;
+import com.pdwu.easycloud.user.constant.TokenConstant;
 import com.pdwu.easycloud.user.service.ITokenService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,11 +25,16 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     private ITokenService tokenService;
 
+    private Logger log = LoggerFactory.getLogger(getClass());
+
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
         boolean isPublic = WebUtils.checkUriPublic(httpServletRequest.getRequestURI());
 
-        String token = httpServletRequest.getParameter("token");
+        String token = getTokenFromRequest(httpServletRequest);
+
+        log.debug("preHandle.getTokenFromRequest.token: {}", token);
+
 
         //1. 不带token
         if (StringUtils.isBlank(token)) {
@@ -57,6 +65,26 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 
+    }
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+
+        String authorization = request.getHeader("Authorization");
+        if (authorization != null) {
+            return authorization;
+        }
+
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                if (c.getName().equals(TokenConstant.COOKIE_NAME)) {
+                    return c.getValue();
+                }
+            }
+        }
+
+
+        return "";
     }
 
     private boolean returnTokenInvalid(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws IOException {

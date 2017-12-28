@@ -32,12 +32,12 @@ public class TokenUtilsTest {
         assertTrue(!TokenUtils.isOverDue(bean));
 
         //2个时间段前的token，已过期
-        long temp = System.currentTimeMillis() - 2 * (TokenConstant.OVERDUE_TIME * 1000);
+        long temp = System.currentTimeMillis() - 2 * (TokenConstant.OVERDUE_TIME_SECOND * 1000);
         bean.setCreateTime(new Date(temp));
         assertTrue(TokenUtils.isOverDue(bean));
 
         //半个时间段前的token，未过期
-        long temp2 = System.currentTimeMillis() - (TokenConstant.OVERDUE_TIME * 500); //0.5*1000=500
+        long temp2 = System.currentTimeMillis() - (TokenConstant.OVERDUE_TIME_SECOND * 500); //0.5*1000=500
         bean.setCreateTime(new Date(temp2));
         assertTrue(!TokenUtils.isOverDue(bean));
 

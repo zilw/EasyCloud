@@ -3,6 +3,7 @@ package com.pdwu.easycloud.common.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
 
@@ -10,13 +11,13 @@ import org.springframework.stereotype.Component;
  * Created by pdwu on 2017/12/19.
  */
 @Component
-@PropertySource(value = "classpath:app/easycloud.properties")
+@PropertySource(value = {"classpath:app/easycloud.properties", "file:/home/myAppConf/easycloud.app.properties"}, ignoreResourceNotFound = true)
 public class AppConfig {
     /**
-     *  api请求地址
-     *
-     *  /api/pub/xxx 公共API
-     *  /api/usr/xxx 需要登录的API
+     * api请求地址
+     * <p>
+     * /api/pub/xxx 公共API
+     * /api/usr/xxx 需要登录的API
      */
 
     //用户模块

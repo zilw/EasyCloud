@@ -16,9 +16,13 @@
             <list>
                 <!-- db配置文件 -->
                 <value>classpath:db.properties</value>
+                <!--生产环境的配置-->
+                <value>file:/home/myAppConf/easycloud.db.properties</value>
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <!--忽略找不到文件抛出的异常-->
+        <property name="ignoreResourceNotFound" value="true"/>
     </bean>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"

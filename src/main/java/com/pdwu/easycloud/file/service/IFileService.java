@@ -46,7 +46,7 @@ public interface IFileService {
      * @param status 为null代表所有状态 （FileInfoConstant.STATUS_xxx)
      * @return
      */
-    List<FileInfoBean> listUserFiles(Long userId, Integer status);
+    List<FileInfoBean> listUserFiles(Long userId, Integer status, int pageNum, int pageSize);
 
     /**
      * 上传文件

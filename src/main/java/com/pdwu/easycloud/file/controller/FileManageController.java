@@ -61,11 +61,20 @@ public class FileManageController {
 
     @RequestMapping(value = AppConfig.API_FILE_LIST)
     @ResponseBody
-    public Object listMyFiles(HttpServletRequest request) {
+    public Object listMyFiles(HttpServletRequest request, Integer pageNum, Integer pageSize) {
 
         Long userId = (Long) request.getSession().getAttribute("userId");
 
-        List<FileInfoBean> list = fileService.listUserFiles(userId, FileInfoConstant.STATUS_NORMAL);
+        int intPageNum = 1;
+        int intPageSize = 10;
+        if (pageNum != null) {
+            intPageNum = pageNum;
+        }
+        if (pageSize != null) {
+            intPageSize = pageSize;
+        }
+
+        List<FileInfoBean> list = fileService.listUserFiles(userId, FileInfoConstant.STATUS_NORMAL, intPageNum, intPageSize);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("list", list);

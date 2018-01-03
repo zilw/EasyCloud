@@ -75,7 +75,7 @@ public class FileServiceImpl implements IFileService {
         return updated == 1 ? ResultBean.success("") : ResultBean.fail("文件不存在");
     }
 
-    public List<FileInfoBean> listUserFiles(Long userId, Integer status) {
+    public List<FileInfoBean> listUserFiles(Long userId, Integer status, int pageNum, int pageSize) {
 
         List<FileInfoBean> list = new ArrayList<FileInfoBean>();
 
@@ -87,6 +87,10 @@ public class FileServiceImpl implements IFileService {
         if (status != null) {
             param.put("status", status);
         }
+
+        param.put("index", (pageNum - 1) * pageSize);
+        param.put("limit", pageSize);
+
         list = fileInfoDao.selectFileInfoList(param);
 
         return list;

@@ -70,7 +70,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private String getTokenFromRequest(HttpServletRequest request) {
 
         String authorization = request.getHeader("Authorization");
-        if (authorization != null) {
+        if (!StringUtils.isBlank(authorization)) {
             return authorization;
         }
 

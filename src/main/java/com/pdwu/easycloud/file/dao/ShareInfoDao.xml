@@ -63,6 +63,10 @@
 
         </where>
 
+        <if test=" index != null">
+            LIMIT #{index},#{limit}
+        </if>
+
     </select>
 
     <update id="updateShareInfoStatus" parameterType="map">

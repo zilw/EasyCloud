@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml", "classpath:spring/db-test.xml"})
 public class FileServiceImplTest {
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
@@ -123,27 +123,27 @@ public class FileServiceImplTest {
     public void listUserFiles() throws Exception {
 
         //arg
-        List<FileInfoBean> list = fileService.listUserFiles(null, null);
+        List<FileInfoBean> list = fileService.listUserFiles(null, null, 1, 10);
         assertEquals(0, list.size());
 
         //用户10011L
-        list = fileService.listUserFiles(10011L, null);
+        list = fileService.listUserFiles(10011L, null, 1, 10);
         assertEquals(2, list.size());
         assertEquals(101L, list.get(0).getFileId().longValue());
         assertEquals(102L, list.get(1).getFileId().longValue());
 
         //用户10011L, STATUS_DELETE
-        List<FileInfoBean> list1 = fileService.listUserFiles(10011L, FileInfoConstant.STATUS_DELETE);
+        List<FileInfoBean> list1 = fileService.listUserFiles(10011L, FileInfoConstant.STATUS_DELETE, 1, 10);
         assertEquals(1, list1.size());
         assertEquals(101L, list1.get(0).getFileId().longValue());
 
         //用户10011L, STATUS_NORMAL
-        List<FileInfoBean> list2 = fileService.listUserFiles(10011L, FileInfoConstant.STATUS_NORMAL);
+        List<FileInfoBean> list2 = fileService.listUserFiles(10011L, FileInfoConstant.STATUS_NORMAL, 1, 10);
         assertEquals(1, list2.size());
         assertEquals(102L, list2.get(0).getFileId().longValue());
 
         //用户19999L, 不存在
-        List<FileInfoBean> list3 = fileService.listUserFiles(19999L, null);
+        List<FileInfoBean> list3 = fileService.listUserFiles(19999L, null, 1, 10);
         assertEquals(0, list3.size());
 
     }

@@ -79,7 +79,7 @@ public class FileManageControllerTest {
     @Test
     public void listMyFiles() throws Exception {
 
-        Mockito.when(fileService.listUserFiles(1001L, FileInfoConstant.STATUS_NORMAL)).thenAnswer(new Answer<List<FileInfoBean>>() {
+        Mockito.when(fileService.listUserFiles(1001L, FileInfoConstant.STATUS_NORMAL,1,10)).thenAnswer(new Answer<List<FileInfoBean>>() {
             public List<FileInfoBean> answer(InvocationOnMock invocationOnMock) throws Throwable {
                 List<FileInfoBean> list = new ArrayList<FileInfoBean>();
                 list.add(new FileInfoBean());

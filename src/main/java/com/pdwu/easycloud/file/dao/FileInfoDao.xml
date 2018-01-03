@@ -48,8 +48,8 @@
 
         </where>
 
-        <if test="pageIndex > 0">
-            LIMIT #{pageIndex},#{pageCount}
+        <if test=" index != null">
+            LIMIT #{index},#{limit}
         </if>
 
     </select>

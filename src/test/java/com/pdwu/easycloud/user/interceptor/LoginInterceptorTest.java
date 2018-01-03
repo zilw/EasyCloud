@@ -4,6 +4,7 @@ import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
 import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.user.bean.TokenBean;
+import com.pdwu.easycloud.user.constant.TokenConstant;
 import com.pdwu.easycloud.user.service.ITokenService;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import static org.junit.Assert.*;
 
@@ -123,5 +129,41 @@ public class LoginInterceptorTest {
 
         new LoginInterceptor();
     }
+
+    @Test
+    public void getTokenFromRequest() throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+
+        //通过反射获取 getTokenFromRequest 方法
+        Class<LoginInterceptor> interceptorClass = LoginInterceptor.class;
+        Object instance = interceptorClass.newInstance();
+        Method method = interceptorClass.getDeclaredMethod("getTokenFromRequest", HttpServletRequest.class);
+        method.setAccessible(true);
+
+        //没有token
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        String token = (String) method.invoke(instance,request);
+        assertEquals("", token);
+
+        //测试token在header
+        request.addHeader("Authorization", "token111");
+        String s = (String) method.invoke(instance, request);
+        assertEquals("token111", s);
+
+        //测试空白token
+        MockHttpServletRequest request1 = new MockHttpServletRequest();
+        request1.addHeader("Authorization", "   ");
+        String s1 = (String) method.invoke(instance, request1);
+        assertEquals("", s1);
+
+        //测试token在cookie
+        MockHttpServletRequest request2 = new MockHttpServletRequest();
+        Cookie cookie = new Cookie(TokenConstant.COOKIE_NAME, "tokenInCookie");
+        request2.setCookies(cookie);
+
+        String s2 = (String) method.invoke(instance, request2);
+        assertEquals("tokenInCookie", s2);
+
+    }
+
 
 }

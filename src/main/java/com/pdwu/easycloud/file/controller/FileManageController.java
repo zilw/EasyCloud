@@ -3,6 +3,7 @@ package com.pdwu.easycloud.file.controller;
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
+import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
 import com.pdwu.easycloud.file.service.IFileService;
 import com.pdwu.easycloud.file.service.IShareService;
@@ -79,6 +80,9 @@ public class FileManageController {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("list", list);
         map.put("userId", userId);
+        map.put("count", list.size());
+        map.put("pageNum", intPageNum);
+        map.put("pageSize", intPageSize);
 
         return ResultBean.success(map);
     }
@@ -113,6 +117,32 @@ public class FileManageController {
     public Object cancelShare(HttpServletRequest request, @RequestParam Long shareId) {
 
         return shareService.deleteShareInfo(shareId);
+    }
+
+    @RequestMapping(value = AppConfig.API_FILE_SHARE_LIST)
+    @ResponseBody
+    public Object shareList(HttpServletRequest request, Integer status, Integer pageNum, Integer pageSize) {
+
+        Long userId = (Long) request.getSession().getAttribute("userId");
+
+        int intPageNum = 1;
+        if (pageNum != null) {
+            intPageNum = pageNum;
+        }
+
+        int intPageSize = 10;
+        if (pageSize != null) {
+            intPageSize = pageSize;
+        }
+
+        List<ShareInfoBean> list = shareService.listUserShareInfos(userId, status, intPageNum, intPageSize);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", list);
+        map.put("count", list.size());
+        map.put("pageNum", intPageNum);
+        map.put("pageSize", intPageSize);
+
+        return ResultBean.success(map);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.pdwu.easycloud.file.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -11,7 +13,9 @@ public class ShareInfoBean {
     private Long userId;
     private Long fileId;
     private Integer status;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastTime;
     private FileInfoBean fileInfo;
 

@@ -24,8 +24,10 @@
         <!-- 注解@ResponseBody，返回Json时乱码处理-->
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <!--<constructor-arg value="UTF-8" />-->
                 <property name="supportedMediaTypes">
                     <list>
+                        <value>application/json;charset=UTF-8</value>
                         <value>text/plain;charset=UTF-8</value>
                     </list>
                 </property>

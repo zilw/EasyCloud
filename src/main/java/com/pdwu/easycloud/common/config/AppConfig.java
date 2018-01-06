@@ -33,6 +33,7 @@ public class AppConfig {
     public static final String API_FILE_DELETE = API_FILE + "/delete";
     public static final String API_FILE_SHARE = API_FILE + "/share";
     public static final String API_FILE_CANCEL_SHARE = API_FILE + "/cancelShare";
+    public static final String API_FILE_SHARE_LIST = API_FILE + "/shareList";
 
     //下载
     public static final String API_PUB_DOWNLOAD = "/api/pub/download";

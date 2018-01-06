@@ -51,6 +51,7 @@ public class UserController {
         Cookie cookie = new Cookie(TokenConstant.COOKIE_NAME, bean.getToken());
         cookie.setMaxAge(TokenConstant.OVERDUE_TIME_SECOND);
         cookie.setHttpOnly(true);
+        cookie.setPath("/");
         response.addCookie(cookie);
 
         return ResultBean.success(bean);

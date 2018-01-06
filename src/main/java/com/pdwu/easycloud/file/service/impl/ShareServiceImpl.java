@@ -68,7 +68,7 @@ public class ShareServiceImpl implements IShareService {
         return list.get(0);
     }
 
-    public List<ShareInfoBean> listUserShareInfos(Long userId, Integer status) {
+    public List<ShareInfoBean> listUserShareInfos(Long userId, Integer status, int pageNum, int pageSize) {
 
         if (userId == null) {
             return new ArrayList<ShareInfoBean>();
@@ -79,6 +79,9 @@ public class ShareServiceImpl implements IShareService {
         if (status != null) {
             param.put("status", status);
         }
+        param.put("index", (pageNum - 1) * pageSize);
+        param.put("limit", pageSize);
+
         List<ShareInfoBean> list = shareInfoDao.selectShareInfo(param);
 
         return list;

@@ -3,6 +3,7 @@ package com.pdwu.easycloud.file.controller;
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
+import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
 import com.pdwu.easycloud.file.service.IFileService;
 import com.pdwu.easycloud.file.service.IShareService;
@@ -79,7 +80,7 @@ public class FileManageControllerTest {
     @Test
     public void listMyFiles() throws Exception {
 
-        Mockito.when(fileService.listUserFiles(1001L, FileInfoConstant.STATUS_NORMAL,1,10)).thenAnswer(new Answer<List<FileInfoBean>>() {
+        Mockito.when(fileService.listUserFiles(1001L, FileInfoConstant.STATUS_NORMAL, 1, 10)).thenAnswer(new Answer<List<FileInfoBean>>() {
             public List<FileInfoBean> answer(InvocationOnMock invocationOnMock) throws Throwable {
                 List<FileInfoBean> list = new ArrayList<FileInfoBean>();
                 list.add(new FileInfoBean());
@@ -154,6 +155,27 @@ public class FileManageControllerTest {
         mockMvc.perform(get(AppConfig.API_FILE_CANCEL_SHARE).param("shareId", "111"))
                 .andDo(print())
                 .andExpect(status().is(405));
+
+    }
+
+    @Test
+    public void shareList() throws Exception {
+        Mockito.when(shareService.listUserShareInfos(1001L, null, 1, 10)).thenAnswer(new Answer<List<ShareInfoBean>>() {
+            public List<ShareInfoBean> answer(InvocationOnMock invocationOnMock) throws Throwable {
+
+                List<ShareInfoBean> list = new ArrayList<ShareInfoBean>();
+                list.add(new ShareInfoBean());
+                list.add(new ShareInfoBean());
+                return list;
+            }
+        });
+
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute("userId", 1001L);
+        mockMvc.perform(get(AppConfig.API_FILE_SHARE_LIST).session(session))
+                .andDo(print())
+                .andExpect(jsonPath("$.data.list.length()", is(2)));
+
 
     }
 

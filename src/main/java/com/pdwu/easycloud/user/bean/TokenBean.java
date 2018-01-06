@@ -1,5 +1,7 @@
 package com.pdwu.easycloud.user.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class TokenBean {

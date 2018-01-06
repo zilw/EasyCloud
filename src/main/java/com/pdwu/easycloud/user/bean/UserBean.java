@@ -1,5 +1,6 @@
 package com.pdwu.easycloud.user.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
@@ -13,7 +14,9 @@ public class UserBean implements Serializable {
     private Long userId;
     private String account;
     private String password;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastTime;
     private String token;
 

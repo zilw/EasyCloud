@@ -41,6 +41,6 @@ public interface IShareService {
      * @param status 为null代表所有状态
      * @return
      */
-    List<ShareInfoBean> listUserShareInfos(Long userId, Integer status);
+    List<ShareInfoBean> listUserShareInfos(Long userId, Integer status, int pageNum, int pageSize);
 
 }

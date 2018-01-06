@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml", "classpath:spring/db-test.xml"})
 public class ShareServiceImplTest {
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
@@ -68,9 +68,9 @@ public class ShareServiceImplTest {
     @Test
     public void insertShareInfo() throws Exception {
         //arg
-        assertEquals(400, shareService.insertShareInfo(null,null).getCode());
+        assertEquals(400, shareService.insertShareInfo(null, null).getCode());
 
-        assertEquals(200, shareService.insertShareInfo(10099L,105L).getCode());
+        assertEquals(200, shareService.insertShareInfo(10099L, 105L).getCode());
     }
 
     @Test
@@ -105,23 +105,23 @@ public class ShareServiceImplTest {
     public void listUserShareInfos() throws Exception {
 
         //arg
-        List<ShareInfoBean> list = shareService.listUserShareInfos(null, null);
+        List<ShareInfoBean> list = shareService.listUserShareInfos(null, null, 1, 10);
         assertEquals(0, list.size());
 
         //用户10011L
-        List<ShareInfoBean> list1 = shareService.listUserShareInfos(10011L, null);
+        List<ShareInfoBean> list1 = shareService.listUserShareInfos(10011L, null, 1, 10);
         assertEquals(3, list1.size());
 
 
         //用户10011L, STATUS_CANCLE
-        List<ShareInfoBean> list2 = shareService.listUserShareInfos(10011L, ShareInfoConstant.STATUS_CANCLE);
+        List<ShareInfoBean> list2 = shareService.listUserShareInfos(10011L, ShareInfoConstant.STATUS_CANCLE, 1, 10);
         assertEquals(2, list2.size());
         assertEquals(101L, list2.get(0).getFileId().longValue());
         assertEquals(102L, list2.get(1).getFileId().longValue());
 
 
         //用户10011L, STATUS_NORMAL
-        List<ShareInfoBean> list3 = shareService.listUserShareInfos(10011L, ShareInfoConstant.STATUS_NORMAL);
+        List<ShareInfoBean> list3 = shareService.listUserShareInfos(10011L, ShareInfoConstant.STATUS_NORMAL, 1, 10);
         assertEquals(1, list3.size());
         assertEquals(104L, list3.get(0).getFileId().longValue());
     }

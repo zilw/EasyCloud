@@ -86,8 +86,8 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(200)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.account", equalTo("xiaoming")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.token", equalTo("12d8aa790b4444aa9796c92cf8af28d9")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.data.createTime", is(1513317967850L)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data.token", equalTo("12d8aa790b4444aa9796c92cf8af28d9")));
+        //.andExpect(MockMvcResultMatchers.jsonPath("$.data.createTime", is(1513317967850L)))
 
         //密码错误
         mockMvc.perform(getPostRequestWithAccountAndPassword(AppConfig.API_LOGIN, "xiaoming", "errorPsd"))

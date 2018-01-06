@@ -163,6 +163,14 @@ public class LoginInterceptorTest {
         String s2 = (String) method.invoke(instance, request2);
         assertEquals("tokenInCookie", s2);
 
+        //测试存在cookie，但不存在token cookie
+        MockHttpServletRequest request3 = new MockHttpServletRequest();
+        Cookie cookie3 = new Cookie("hahaha", "tokenInCookie");
+        request3.setCookies(cookie3);
+
+        String s3 = (String) method.invoke(instance, request3);
+        assertEquals("", s3);
+
     }
 
 

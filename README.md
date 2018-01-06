@@ -53,7 +53,8 @@ EasyCloud是一个简易的文件分享平台。
 | 分享 |  获取文件分享详情  | /api/pub/share/{shortlink} |  GET |      |                    |
 |      |                    |                            |      |      |                    |
 
-### 详细接口文档 [/doc/api_xxx.md]
+### 详细接口文档 
+路径： /doc/api_xxx.md  
 - 通用规范 [api_common.md](./doc/api_common.md)
 - 文件模块 [api_file.md](./doc/api_file.md)
 - 用户模块 [api_user.md](./doc/api_user.md)

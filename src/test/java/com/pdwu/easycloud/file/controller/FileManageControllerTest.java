@@ -95,6 +95,14 @@ public class FileManageControllerTest {
                 .andDo(print())
                 .andExpect(jsonPath("$.data.userId", equalTo(1001)))
                 .andExpect(jsonPath("$.data.list.length()", is(2)));
+
+        mockMvc.perform(get(AppConfig.API_FILE_LIST)
+                .session(session)
+                .param("pageNum", "1")
+                .param("pageSize", "10"))
+                .andDo(print())
+                .andExpect(jsonPath("$.data.userId", equalTo(1001)))
+                .andExpect(jsonPath("$.data.list.length()", is(2)));
     }
 
     @Test
@@ -173,6 +181,13 @@ public class FileManageControllerTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", 1001L);
         mockMvc.perform(get(AppConfig.API_FILE_SHARE_LIST).session(session))
+                .andDo(print())
+                .andExpect(jsonPath("$.data.list.length()", is(2)));
+
+        mockMvc.perform(get(AppConfig.API_FILE_SHARE_LIST)
+                .session(session)
+                .param("pageNum", "1")
+                .param("pageSize", "10"))
                 .andDo(print())
                 .andExpect(jsonPath("$.data.list.length()", is(2)));
 

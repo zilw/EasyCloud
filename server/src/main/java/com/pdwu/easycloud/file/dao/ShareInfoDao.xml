@@ -4,12 +4,12 @@
 
     <resultMap id="shareInfoMap" type="com.pdwu.easycloud.file.bean.ShareInfoBean">
 
-        <id column="SHARE_ID" property="shareId"/>
-        <result column="FILE_ID" property="fileId"/>
-        <result column="USER_ID" property="userId"/>
-        <result column="STATUS" property="status"/>
-        <result column="CREATE_TIME" property="createTime"/>
-        <result column="LAST_TIME" property="lastTime"/>
+        <id column="share_id" property="shareId"/>
+        <result column="file_id" property="fileId"/>
+        <result column="user_id" property="userId"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_time" property="lastTime"/>
 
         <association property="fileInfo" javaType="com.pdwu.easycloud.file.bean.FileInfoBean"
                      resultMap="com.pdwu.easycloud.file.dao.FileInfoDao.fileInfoMap" columnPrefix="F_"/>
@@ -19,7 +19,7 @@
     <insert id="insertShareInfo" parameterType="com.pdwu.easycloud.file.bean.ShareInfoBean"
             useGeneratedKeys="true" keyProperty="shareId">
 
-        INSERT INTO share_info (USER_ID, FILE_ID, STATUS, CREATE_TIME, LAST_TIME)
+        INSERT INTO share_info (user_id, file_id, status, create_time, last_time)
             VALUES (#{userId}, #{fileId}, #{status}, #{createTime}, #{lastTime})
 
     </insert>
@@ -27,39 +27,39 @@
     <select id="selectShareInfo" parameterType="map" resultMap="shareInfoMap">
 
         SELECT
-        share_info.SHARE_ID,
-        share_info.USER_ID,
-        share_info.FILE_ID,
-        share_info.STATUS,
-        share_info.CREATE_TIME,
-        share_info.LAST_TIME,
-        file_info.FILE_ID as F_FILE_ID,
-        file_info.USER_ID as F_USER_ID,
-        file_info.MD5 as F_MD5,
-        file_info.PATH as F_PATH,
-        file_info.NAME as F_NAME,
-        file_info.SIZE as F_SIZE,
-        file_info.STATUS as F_STATUS,
-        file_info.CREATE_TIME as F_CREATE_TIME,
-        file_info.LAST_TIME as F_LAST_TIME
+        share_info.share_id,
+        share_info.user_id,
+        share_info.file_id,
+        share_info.status,
+        share_info.create_time,
+        share_info.last_time,
+        file_info.file_id as F_file_id,
+        file_info.user_id as F_user_id,
+        file_info.md5 as F_md5,
+        file_info.path as F_path,
+        file_info.name as F_name,
+        file_info.size as F_size,
+        file_info.status as F_status,
+        file_info.create_time as F_create_time,
+        file_info.last_time as F_last_time
         FROM share_info
-        LEFT JOIN file_info ON share_info.FILE_ID = file_info.FILE_ID
+        LEFT JOIN file_info ON share_info.file_id = file_info.file_id
         <where>
 
             <if test="userId != null">
-                share_info.USER_ID = #{userId}
+                share_info.user_id = #{userId}
             </if>
 
             <if test="fileId != null">
-                AND share_info.FILE_ID = #{fileId}
+                AND share_info.file_id = #{fileId}
             </if>
 
             <if test="shareId != null">
-                AND share_info.SHARE_ID = #{shareId}
+                AND share_info.share_id = #{shareId}
             </if>
 
             <if test="status != null">
-                AND share_info.STATUS = #{status}
+                AND share_info.status = #{status}
             </if>
 
         </where>
@@ -73,10 +73,10 @@
     <update id="updateShareInfoStatus" parameterType="map">
 
         UPDATE share_info
-        SET LAST_TIME = #{lastTime}, STATUS = #{status}
+        SET last_time = #{lastTime}, status = #{status}
 
         <where>
-            SHARE_ID = #{shareId}
+            share_id = #{shareId}
         </where>
 
     </update>

@@ -1,6 +1,5 @@
 package com.pdwu.easycloud.file.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
 import com.pdwu.easycloud.common.config.AppConfig;
@@ -8,15 +7,11 @@ import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.service.IDownloadService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import sun.misc.CharacterEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -85,7 +80,7 @@ public class DownloadController {
         }
 
         response.setContentType(mimeType);
-        response.setContentLengthLong(file.length());
+        //response.setContentLengthLong(file.length());
         response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileInfoBean.getName() + "\"");
 
         //文件下载

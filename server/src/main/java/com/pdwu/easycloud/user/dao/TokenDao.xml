@@ -4,35 +4,35 @@
 
 
     <resultMap id="tokenBeanMap" type="com.pdwu.easycloud.user.bean.TokenBean">
-        <result column="USER_ID" property="userId"/>
-        <result column="TOKEN" property="token"/>
-        <result column="STATUS" property="status"/>
-        <result column="CREATE_TIME" property="createTime"/>
-        <result column="LAST_TIME" property="lastTime"/>
+        <result column="user_id" property="userId"/>
+        <result column="token" property="token"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_time" property="lastTime"/>
     </resultMap>
 
     <insert id="insertToken" parameterType="com.pdwu.easycloud.user.bean.TokenBean">
-        INSERT INTO user_token (USER_ID, TOKEN, CREATE_TIME, LAST_TIME, STATUS)
+        INSERT INTO user_token (user_id, token, create_time, last_time, status)
             VALUES (#{userId}, #{token}, #{createTime}, #{lastTime}, #{status})
 
     </insert>
 
     <select id="selectToken" resultMap="tokenBeanMap" parameterType="map">
 
-        SELECT USER_ID,TOKEN,CREATE_TIME,LAST_TIME,STATUS
+        SELECT user_id,token,create_time,last_time,status
         FROM user_token
         <where>
 
             <if test="token != null">
-                TOKEN = #{token}
+                token = #{token}
             </if>
 
             <if test="userId != null">
-                AND USER_ID = #{userId}
+                AND user_id = #{userId}
             </if>
 
             <if test="status != null">
-                AND STATUS = #{status}
+                AND status = #{status}
             </if>
 
         </where>
@@ -41,11 +41,11 @@
 
     <update id="updateTokenStatus" parameterType="map">
 
-        UPDATE user_token SET STATUS=#{status}
+        UPDATE user_token SET status=#{status}
         <where>
 
             <if test="token != null">
-                TOKEN = #{token}
+                token = #{token}
             </if>
 
         </where>

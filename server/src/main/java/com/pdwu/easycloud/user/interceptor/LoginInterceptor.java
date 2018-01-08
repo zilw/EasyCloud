@@ -29,6 +29,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
+        log.debug("preHandle.RequestURI: {}", httpServletRequest.getRequestURI());
+
         boolean isPublic = WebUtils.checkUriPublic(httpServletRequest.getRequestURI());
 
         String token = getTokenFromRequest(httpServletRequest);

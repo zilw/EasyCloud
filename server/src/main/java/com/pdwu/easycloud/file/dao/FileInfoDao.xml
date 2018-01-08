@@ -4,46 +4,46 @@
 
     <resultMap id="fileInfoMap" type="com.pdwu.easycloud.file.bean.FileInfoBean">
 
-        <id column="FILE_ID" property="fileId"/>
-        <result column="USER_ID" property="userId"/>
-        <result column="MD5" property="md5"/>
-        <result column="PATH" property="truePath"/>
-        <result column="NAME" property="name"/>
-        <result column="SIZE" property="size"/>
-        <result column="STATUS" property="status"/>
-        <result column="CREATE_TIME" property="createTime"/>
-        <result column="LAST_TIME" property="lastTime"/>
+        <id column="file_id" property="fileId"/>
+        <result column="user_id" property="userId"/>
+        <result column="md5" property="md5"/>
+        <result column="path" property="truePath"/>
+        <result column="name" property="name"/>
+        <result column="size" property="size"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_time" property="lastTime"/>
 
     </resultMap>
 
     <insert id="insertFileInfo" parameterType="com.pdwu.easycloud.file.bean.FileInfoBean"
             useGeneratedKeys="true" keyProperty="fileId">
 
-        INSERT INTO file_info (USER_ID, MD5, PATH, NAME, SIZE, STATUS, CREATE_TIME, LAST_TIME)
+        INSERT INTO file_info (user_id, md5, path, name, size, status, create_time, last_time)
             VALUES (#{userId}, #{md5}, #{truePath}, #{name}, #{size}, #{status}, #{createTime}, #{lastTime})
 
     </insert>
 
     <select id="selectFileInfoList" parameterType="map" resultMap="fileInfoMap">
 
-        SELECT FILE_ID,USER_ID, MD5, PATH, NAME,SIZE, STATUS, CREATE_TIME, LAST_TIME
+        SELECT file_id,user_id, md5, path, name,size, status, create_time, last_time
         FROM file_info
         <where>
 
             <if test="userId != null">
-                USER_ID = #{userId}
+                user_id = #{userId}
             </if>
 
             <if test="fileId != null">
-                AND FILE_ID = #{fileId}
+                AND file_id = #{fileId}
             </if>
 
             <if test="md5 != null">
-                AND MD5 = #{md5}
+                AND md5 = #{md5}
             </if>
 
             <if test="status != null">
-                AND STATUS = #{status}
+                AND status = #{status}
             </if>
 
         </where>
@@ -58,21 +58,21 @@
 
         UPDATE file_info
         <set>
-            LAST_TIME = #{lastTime}
+            last_time = #{lastTime}
 
             <if test="name != null">
-                , NAME = #{name}
+                , name = #{name}
             </if>
 
             <if test="status != null">
-                , STATUS = #{status}
+                , status = #{status}
             </if>
 
         </set>
 
         <where>
 
-            FILE_ID = #{fileId}
+            file_id = #{fileId}
 
         </where>
 

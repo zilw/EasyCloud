@@ -4,20 +4,20 @@
 
 
     <resultMap id="userBeanMap" type="com.pdwu.easycloud.user.bean.UserBean">
-        <result column="USER_ID" property="userId"/>
-        <result column="ACCOUNT" property="account"/>
-        <result column="PASSWORD" property="password"/>
-        <result column="CREATE_TIME" property="createTime"/>
-        <result column="LAST_TIME" property="lastTime"/>
+        <result column="user_id" property="userId"/>
+        <result column="account" property="account"/>
+        <result column="password" property="password"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_time" property="lastTime"/>
 
     </resultMap>
 
 
     <select id="selectUserAccountCount" resultType="int" parameterType="string">
 
-        SELECT count(1)
-        FROM USER_INFO
-        WHERE ACCOUNT = #{account}
+        SELECT count(*)
+        FROM user_info
+        WHERE account = #{account}
 
     </select>
 
@@ -25,13 +25,13 @@
             parameterType="com.pdwu.easycloud.user.bean.UserBean">
 
         SELECT
-            USER_ID,
-            ACCOUNT,
-            CREATE_TIME,
-            LAST_TIME
+            user_id,
+            account,
+            create_time,
+            last_time
         FROM user_info
-        WHERE ACCOUNT = #{account}
-              AND PASSWORD = #{password}
+        WHERE account = #{account}
+              AND password = #{password}
 
     </select>
 
@@ -39,19 +39,19 @@
             parameterType="map">
 
         SELECT
-        USER_ID,
-        ACCOUNT,
-        CREATE_TIME,
-        LAST_TIME
+        user_id,
+        account,
+        create_time,
+        last_time
         FROM user_info
         <where>
 
             <if test="userId != null">
-                AND USER_ID = #{userId}
+                AND user_id = #{userId}
             </if>
 
             <if test="account != null">
-                AND ACCOUNT = #{account}
+                AND account = #{account}
             </if>
 
         </where>
@@ -61,7 +61,7 @@
 
     <insert id="insertUser" parameterType="com.pdwu.easycloud.user.bean.UserBean" useGeneratedKeys="true" keyProperty="userId">
 
-        INSERT INTO USER_INFO (ACCOUNT, PASSWORD, CREATE_TIME, LAST_TIME)
+        INSERT INTO user_info (account, password, create_time, last_time)
             VALUES (#{account}, #{password}, #{createTime}, #{lastTime})
 
     </insert>

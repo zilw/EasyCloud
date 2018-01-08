@@ -8,7 +8,7 @@ public class TokenConstant {
     //token过期时间（单位：秒）
     public static final int OVERDUE_TIME_SECOND = 7200;
 
-    public static final String COOKIE_NAME = "token";
+    public static final String COOKIE_NAME = "easycloud_token";
 
 
     //token状态： 正常

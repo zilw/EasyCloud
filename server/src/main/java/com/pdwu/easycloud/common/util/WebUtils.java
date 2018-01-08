@@ -10,11 +10,9 @@ import java.util.List;
 public class WebUtils {
 
     private static String[] pubUris = new String[]{
+            "/easycloud/api/pub.*",
             "/api/pub.*",
             "/error.*",
-            "/api/login.*",
-            "/api/register.*",
-            "/api/logout.*",
             "/static.*"
     };
 

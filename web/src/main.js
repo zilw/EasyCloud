@@ -4,12 +4,52 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import ElementUI from 'element-ui'
+//import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+//Vue.use(ElementUI)
+
+import { Button,ButtonGroup, Select,Dialog,Menu,  Submenu,  MenuItem,  MenuItemGroup,Input,  InputNumber,Table,
+  TableColumn,  Form,  FormItem, Alert, Icon,  Row,  Col,  Upload,  Progress,Container,  Header,  Aside,  Main,  Footer,
+  Loading,  MessageBox,  Message,  Notification} from 'element-ui' 
+  
+Vue.use(Dialog)
+Vue.use(Menu)
+Vue.use(Submenu)
+Vue.use(MenuItem)
+Vue.use(MenuItemGroup)
+Vue.use(Input)
+Vue.use(InputNumber)
+Vue.use(Select)
+Vue.use(Button)
+Vue.use(ButtonGroup)
+Vue.use(Table)
+Vue.use(TableColumn)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Alert)
+Vue.use(Icon)
+Vue.use(Row)
+Vue.use(Col)
+Vue.use(Upload)
+Vue.use(Progress)
+Vue.use(Container)
+Vue.use(Header)
+Vue.use(Aside)
+Vue.use(Main)
+Vue.use(Footer)
+Vue.use(Loading.directive)
+
+//element ui
+Vue.prototype.$loading = Loading.service
+Vue.prototype.$msgbox = MessageBox
+Vue.prototype.$alert = MessageBox.alert
+Vue.prototype.$confirm = MessageBox.confirm
+Vue.prototype.$prompt = MessageBox.prompt
+Vue.prototype.$notify = Notification
+Vue.prototype.$message = Message
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-Vue.use(ElementUI)
 
 Vue.prototype.$user = {
   isLogin: function () {

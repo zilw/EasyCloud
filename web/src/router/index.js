@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import NotFound from '@/components/view/NotFound'
-import LoginView from '@/components/view/LoginView'
-import RegisterView from '@/components/view/RegisterView'
-import MyFileView from '@/components/view/MyFileView'
-import MyShareView from '@/components/view/MyShareView'
+
 import HeadItem from '@/components/HeadItem'
 import AsideItem from '@/components/AsideItem'
+const LoginView = () => import('@/components/view/LoginView.vue')
+const MyShareView = () => import('@/components/view/MyShareView.vue')
+const RegisterView = () => import('@/components/view/RegisterView.vue')
+const NotFound = () => import('@/components/view/NotFound.vue')
+const MyFileView = () => import('@/components/view/MyFileView.vue')
 
 Vue.use(Router)
 
@@ -33,12 +33,6 @@ export default new Router({
       path: '/register',
       name: 'route-register',
       component: RegisterView
-
-    },
-    {
-      path: '/test',
-      name: 'route-test',
-      component: HelloWorld
 
     },
     {

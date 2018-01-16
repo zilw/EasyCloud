@@ -10,6 +10,7 @@ import com.pdwu.easycloud.user.util.TokenUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class TokenServiceImpl implements ITokenService {
     @Autowired
     private TokenDao tokenDao;
 
+    @Transactional
     public TokenBean addToken(Long userId) {
 
         TokenBean bean = new TokenBean();
@@ -36,6 +38,7 @@ public class TokenServiceImpl implements ITokenService {
         return bean;
     }
 
+    @Transactional(readOnly = true)
     public ResultBean checkTokenValid(String token) {
         if (StringUtils.isBlank(token)) {
             return ResultBean.ARG_ERROR;
@@ -57,6 +60,7 @@ public class TokenServiceImpl implements ITokenService {
         return ResultBean.success(list.get(0));
     }
 
+    @Transactional
     public ResultBean updateTokenStatus(String token, Integer status) {
         if (StringUtils.isBlank(token) || status == null) {
             return ResultBean.ARG_ERROR;

@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml", "classpath:spring/db-test.xml"})
 public class ShareInfoDaoTest {
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
@@ -48,7 +48,7 @@ public class ShareInfoDaoTest {
         Operation operation = sequenceOf(
                 Operations.deleteAllFrom("file_info", "share_info"),
                 Operations.insertInto("file_info")
-                        .columns("FILE_ID", "USER_ID", "MD5", "PATH", "NAME", "SIZE","STATUS", "CREATE_TIME", "LAST_TIME")
+                        .columns("FILE_ID", "USER_ID", "MD5", "PATH", "NAME", "SIZE", "STATUS", "CREATE_TIME", "LAST_TIME")
                         .values(101L, 10011L, "793914c9c583d9d86d0f4ed8c521b0c1", "/file/10011/", "1513317967830.png", 100L, FileInfoConstant.STATUS_DELETE, new Date(1513317967830L), new Date(1513317967830L))
                         .values(102L, 10011L, "c28cbd398a61e9022fd6a6835a57dc50", "/file/10011/", "1513317967833.zip", 100L, FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
                         .values(103L, 10012L, "099b3b060154898840f0ebdfb46ec78f", "/file/10012/", "1513317967835.png", 100L, FileInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
@@ -138,6 +138,23 @@ public class ShareInfoDaoTest {
         List<ShareInfoBean> list2 = shareInfoDao.selectShareInfo(param);
         assertEquals(1, list2.size());
         assertEquals(104L, list2.get(0).getFileId().longValue());
+
+    }
+
+    @Test
+    public void delete() throws Exception {
+        Map<String, Object> param = new HashMap<String, Object>();
+
+        param.put("shareId", 100999L);
+
+        //不存在
+        int i = shareInfoDao.delete(param);
+        assertEquals(0, i);
+
+        param.clear();
+        param.put("shareId", 100001L);
+        int i2 = shareInfoDao.delete(param);
+        assertEquals(1, i2);
 
     }
 

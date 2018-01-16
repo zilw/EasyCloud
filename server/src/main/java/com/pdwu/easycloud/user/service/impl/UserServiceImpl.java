@@ -2,6 +2,7 @@ package com.pdwu.easycloud.user.service.impl;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
+import com.pdwu.easycloud.common.util.MD5Utils;
 import com.pdwu.easycloud.user.bean.TokenBean;
 import com.pdwu.easycloud.user.bean.UserBean;
 import com.pdwu.easycloud.user.constant.TokenConstant;
@@ -11,6 +12,7 @@ import com.pdwu.easycloud.user.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private ITokenService tokenService;
 
+    @Transactional()
     public UserBean login(String account, String password) {
 
         if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
@@ -36,7 +39,9 @@ public class UserServiceImpl implements IUserService {
 
         UserBean arg = new UserBean();
         arg.setAccount(account);
-        arg.setPassword(password);
+        //获取密码的md5摘要
+        String passwordMd5 = MD5Utils.getStringMd5(password);
+        arg.setPassword(passwordMd5);
 
         UserBean userBean = this.userDao.selectUserByAccountAndPassword(arg);
 
@@ -50,6 +55,7 @@ public class UserServiceImpl implements IUserService {
         return userBean;
     }
 
+    @Transactional
     public ResultBean register(String account, String password) {
 
         if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
@@ -63,7 +69,10 @@ public class UserServiceImpl implements IUserService {
 
         UserBean bean = new UserBean();
         bean.setAccount(account);
-        bean.setPassword(password);
+        //保存密码的md5摘要
+        String passwordMd5 = MD5Utils.getStringMd5(password);
+        bean.setPassword(passwordMd5);
+
         Date date = new Date();
         bean.setCreateTime(date);
         bean.setLastTime(date);
@@ -74,6 +83,7 @@ public class UserServiceImpl implements IUserService {
 
     }
 
+    @Transactional
     public ResultBean logout(String token) {
 
         ResultBean resultBean = this.tokenService.updateTokenStatus(token, TokenConstant.STATUS_DELETE);

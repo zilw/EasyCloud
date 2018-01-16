@@ -46,13 +46,16 @@ public class UserServiceImplTest {
     @Before
     public void setUp() throws Exception {
 
+        //thisispassword md5: 81c93a6d22daaa5fdb4dbd4267e5e06e
+        //mythisispassword md5: 28cc3ddb050d95a52aeb507bbd74c3e7
+
         Operation operation = sequenceOf(
                 Operations.deleteAllFrom("user_info", "user_token"),
                 Operations.insertInto("user_info")
                         .columns("USER_ID", "ACCOUNT", "PASSWORD", "CREATE_TIME", "LAST_TIME")
-                        .values(10010L, "xiaoming", "thisispassword", new Date(1513317967830L), new Date(1513317967830L))
-                        .values(10011L, "zhangsan", "thisispassword", new Date(1513317967840L), new Date(1513317967840L))
-                        .values(10012L, "lisi", "mythisispassword", new Date(1513317967850L), new Date(1513317967850L))
+                        .values(10010L, "xiaoming", "81c93a6d22daaa5fdb4dbd4267e5e06e", new Date(1513317967830L), new Date(1513317967830L))
+                        .values(10011L, "zhangsan", "81c93a6d22daaa5fdb4dbd4267e5e06e", new Date(1513317967840L), new Date(1513317967840L))
+                        .values(10012L, "lisi", "28cc3ddb050d95a52aeb507bbd74c3e7", new Date(1513317967850L), new Date(1513317967850L))
                         .build(),
                 Operations.insertInto("user_token")
                         .columns("USER_ID", "TOKEN", "STATUS", "CREATE_TIME", "LAST_TIME")

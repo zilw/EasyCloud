@@ -10,6 +10,7 @@ import com.pdwu.easycloud.file.service.IFileService;
 import com.pdwu.easycloud.file.service.IShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ public class DownloadServiceImpl implements IDownloadService {
     @Autowired
     private IShareService shareService;
 
+    @Transactional(readOnly = true)
     public ResultBean download(Long userId, Long fileId, Long shareId, Map<String, Object> param) {
 
         FileInfoBean fileInfoBean = fileService.getFileInfoById(fileId);

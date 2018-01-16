@@ -7,12 +7,14 @@ import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
 import com.pdwu.easycloud.file.dao.FileInfoDao;
 import com.pdwu.easycloud.file.service.IFileService;
+import com.pdwu.easycloud.file.service.IShareService;
 import com.pdwu.easycloud.file.util.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -33,7 +35,10 @@ public class FileServiceImpl implements IFileService {
     @Autowired
     private AppConfig appConfig;
 
+    @Autowired
+    private IShareService shareService;
 
+    @Transactional
     public ResultBean insertFileInfo(FileInfoBean bean) {
         if (bean == null) {
             return ResultBean.ARG_ERROR;
@@ -44,6 +49,7 @@ public class FileServiceImpl implements IFileService {
         return updated == 1 ? ResultBean.success(bean) : ResultBean.fail("服务器错误");
     }
 
+    @Transactional
     public ResultBean updateFileName(Long fileId, String fileName) {
 
         if (fileId == null || StringUtils.isBlank(fileName)) {
@@ -60,6 +66,7 @@ public class FileServiceImpl implements IFileService {
         return updated == 1 ? ResultBean.success("") : ResultBean.fail("文件不存在");
     }
 
+    @Transactional
     public ResultBean deleteFileInfo(Long fileId) {
         if (fileId == null) {
             return ResultBean.ARG_ERROR;
@@ -71,10 +78,13 @@ public class FileServiceImpl implements IFileService {
         param.put("lastTime", new Date());
 
         int updated = fileInfoDao.updateFileInfo(param);
+        //同时删除该文件的分享（若分享存在）
+        shareService.deleteShareInfoByFileId(fileId);
 
         return updated == 1 ? ResultBean.success("") : ResultBean.fail("文件不存在");
     }
 
+    @Transactional(readOnly = true)
     public List<FileInfoBean> listUserFiles(Long userId, Integer status, int pageNum, int pageSize) {
 
         List<FileInfoBean> list = new ArrayList<FileInfoBean>();
@@ -96,6 +106,7 @@ public class FileServiceImpl implements IFileService {
         return list;
     }
 
+    @Transactional
     public ResultBean uploadFile(Long userId, MultipartFile uploadedFile) throws Exception {
         if (userId == null || uploadedFile == null) {
             return ResultBean.ARG_ERROR;
@@ -153,6 +164,7 @@ public class FileServiceImpl implements IFileService {
         return ResultBean.success(bean);
     }
 
+    @Transactional(readOnly = true)
     public FileInfoBean getFileInfoByMD5(String md5) {
         if (md5 == null) {
             return null;
@@ -167,6 +179,7 @@ public class FileServiceImpl implements IFileService {
         return list.get(0);
     }
 
+    @Transactional(readOnly = true)
     public FileInfoBean getFileInfoById(Long fileId) {
 
         if (fileId == null) {

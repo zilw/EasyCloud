@@ -33,4 +33,13 @@ public interface ShareInfoDao {
      * @return
      */
     List<ShareInfoBean> selectShareInfo(Map param);
+
+    /**
+     * 删除分享
+     *
+     * @param param O(shareId, fileId)
+     * @return
+     */
+    int delete(Map param);
+
 }

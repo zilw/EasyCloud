@@ -2,6 +2,8 @@ package com.pdwu.easycloud.file.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pdwu.easycloud.file.util.FileSizeSerialize;
 
 import java.util.Date;
 
@@ -16,8 +18,11 @@ public class FileInfoBean {
     private String md5;
     private String truePath;    //服务器保存文件的真实路径
     private String name;
-    private Long size;
     private Integer status;
+
+    @JsonSerialize(using = FileSizeSerialize.class)
+    private Long size;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

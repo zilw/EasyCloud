@@ -58,6 +58,8 @@ public class ShareServiceImplTest {
                         .values(100012L, 102L, 10011L, ShareInfoConstant.STATUS_CANCLE, new Date(1513317967830L), new Date(1513317967830L))
                         .values(100123L, 103L, 10012L, ShareInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
                         .values(102224L, 104L, 10011L, ShareInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
+                        .values(103224L, 1055L, 100112L, ShareInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
+                        .values(104224L, 1055L, 100112L, ShareInfoConstant.STATUS_NORMAL, new Date(1513317967830L), new Date(1513317967830L))
                         .build()
         );
 
@@ -83,6 +85,19 @@ public class ShareServiceImplTest {
 
         //shareId不存在
         assertEquals(400, shareService.deleteShareInfo(100999L).getCode());
+    }
+
+    @Test
+    public void deleteShareInfoByFileId() throws Exception {
+
+        //arg
+        assertEquals(400, shareService.deleteShareInfoByFileId(null).getCode());
+
+        //成功
+        assertEquals(200, shareService.deleteShareInfoByFileId(1055L).getCode());
+
+        //file不存在
+        assertEquals(400, shareService.deleteShareInfoByFileId(100999L).getCode());
     }
 
     @Test

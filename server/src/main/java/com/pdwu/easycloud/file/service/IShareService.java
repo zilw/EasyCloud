@@ -19,12 +19,20 @@ public interface IShareService {
     ResultBean insertShareInfo(Long userId, Long fileId);
 
     /**
-     * 删除分享信息（取消分享） （逻辑删除）
+     * 删除分享信息（取消分享） （物理删除）
      *
      * @param shareId
      * @return
      */
     ResultBean deleteShareInfo(Long shareId);
+
+    /**
+     * 删除指定文件的分享 （物理删除）
+     *
+     * @param fileId
+     * @return
+     */
+    ResultBean deleteShareInfoByFileId(Long fileId);
 
     /**
      * 根据shareId查看分享的文件

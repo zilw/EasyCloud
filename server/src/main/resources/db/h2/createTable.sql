@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS user_info;
 CREATE TABLE user_info (
   user_id     BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   account     VARCHAR(10) NOT NULL,
-  password    VARCHAR(20) NOT NULL,
+  password    VARCHAR(64) NOT NULL,
   create_time DATETIME(3) NOT NULL,
   last_time   DATETIME(3) NOT NULL
 

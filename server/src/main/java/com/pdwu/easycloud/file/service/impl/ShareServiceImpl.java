@@ -8,6 +8,7 @@ import com.pdwu.easycloud.file.service.IShareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class ShareServiceImpl implements IShareService {
     @Autowired
     private ShareInfoDao shareInfoDao;
 
+    @Transactional
     public ResultBean insertShareInfo(Long userId, Long fileId) {
         if (userId == null || fileId == null) {
             return ResultBean.ARG_ERROR;
@@ -40,20 +42,33 @@ public class ShareServiceImpl implements IShareService {
         return updated == 1 ? ResultBean.success(bean) : ResultBean.fail("服务器错误");
     }
 
+    @Transactional
     public ResultBean deleteShareInfo(Long shareId) {
         if (shareId == null) {
             return ResultBean.ARG_ERROR;
         }
         Map<String, Object> param = new HashMap<String, Object>();
+
         param.put("shareId", shareId);
-        param.put("status", ShareInfoConstant.STATUS_CANCLE);
-        param.put("lastTime", new Date());
+        int updated = shareInfoDao.delete(param);
 
-        int updated = shareInfoDao.updateShareInfoStatus(param);
-
-        return updated == 1 ? ResultBean.success("") : ResultBean.fail("不存在该分享");
+        return updated >= 1 ? ResultBean.success("") : ResultBean.fail("不存在该分享");
     }
 
+    @Transactional
+    public ResultBean deleteShareInfoByFileId(Long fileId) {
+        if (fileId == null) {
+            return ResultBean.ARG_ERROR;
+        }
+        Map<String, Object> param = new HashMap<String, Object>();
+
+        param.put("fileId", fileId);
+        int updated = shareInfoDao.delete(param);
+
+        return updated >= 1 ? ResultBean.success("") : ResultBean.fail("不存在该文件的分享");
+    }
+
+    @Transactional(readOnly = true)
     public ShareInfoBean getShareFileInfoById(Long shareId) {
         if (shareId == null) {
             return null;
@@ -68,6 +83,7 @@ public class ShareServiceImpl implements IShareService {
         return list.get(0);
     }
 
+    @Transactional(readOnly = true)
     public List<ShareInfoBean> listUserShareInfos(Long userId, Integer status, int pageNum, int pageSize) {
 
         if (userId == null) {

@@ -88,6 +88,8 @@ public class FileManageControllerTest {
                 return list;
             }
         });
+        Mockito.when(fileService.countUserFiles(1001L,FileInfoConstant.STATUS_NORMAL))
+                .thenReturn(25);
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", 1001L);
@@ -102,6 +104,8 @@ public class FileManageControllerTest {
                 .param("pageSize", "10"))
                 .andDo(print())
                 .andExpect(jsonPath("$.data.userId", equalTo(1001)))
+                .andExpect(jsonPath("$.data.totalPage", equalTo(3)))
+                .andExpect(jsonPath("$.data.totalNumber", equalTo(25)))
                 .andExpect(jsonPath("$.data.list.length()", is(2)));
     }
 

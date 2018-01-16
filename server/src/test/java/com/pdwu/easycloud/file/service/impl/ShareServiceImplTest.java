@@ -33,6 +33,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml", "classpath:spring/db-test.xml"})
 public class ShareServiceImplTest {
 
+
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
 
     @Autowired
@@ -139,6 +140,17 @@ public class ShareServiceImplTest {
         List<ShareInfoBean> list3 = shareService.listUserShareInfos(10011L, ShareInfoConstant.STATUS_NORMAL, 1, 10);
         assertEquals(1, list3.size());
         assertEquals(104L, list3.get(0).getFileId().longValue());
+    }
+
+    @Test
+    public void countShareList() throws Exception {
+
+        assertEquals(6, shareService.countShareList(null, null));
+
+        assertEquals(3, shareService.countShareList(10011L, null));
+
+        assertEquals(1, shareService.countShareList(10011L, ShareInfoConstant.STATUS_NORMAL));
+
     }
 
 }

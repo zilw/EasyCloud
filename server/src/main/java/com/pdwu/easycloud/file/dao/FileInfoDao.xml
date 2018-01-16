@@ -78,5 +78,23 @@
 
     </update>
 
+    <select id="countFileList" parameterType="map" resultType="int">
+
+        SELECT count(*)
+        FROM file_info
+        <where>
+
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+
+        </where>
+
+    </select>
+
 
 </mapper>

@@ -34,4 +34,12 @@ public interface FileInfoDao {
      */
     int updateFileInfo(Map param);
 
+    /**
+     * 统计文件信息数量
+     *
+     * @param param O(userId, status)
+     * @return
+     */
+    int countFileList(Map param);
+
 }

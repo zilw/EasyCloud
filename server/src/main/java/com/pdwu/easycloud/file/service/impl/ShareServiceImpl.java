@@ -5,6 +5,7 @@ import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.constant.ShareInfoConstant;
 import com.pdwu.easycloud.file.dao.ShareInfoDao;
 import com.pdwu.easycloud.file.service.IShareService;
+import com.pdwu.easycloud.file.service.IShortLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class ShareServiceImpl implements IShareService {
 
     @Autowired
     private ShareInfoDao shareInfoDao;
+
+    @Autowired
+    private IShortLinkService shortLinkService;
 
     @Transactional
     public ResultBean insertShareInfo(Long userId, Long fileId) {
@@ -101,5 +105,16 @@ public class ShareServiceImpl implements IShareService {
         List<ShareInfoBean> list = shareInfoDao.selectShareInfo(param);
 
         return list;
+    }
+
+    public int countShareList(Long userId, Integer status) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        if (status != null) {
+            param.put("status", status);
+        }
+
+        return shareInfoDao.countShareList(param);
     }
 }

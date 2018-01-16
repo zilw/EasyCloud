@@ -195,6 +195,17 @@ public class FileServiceImpl implements IFileService {
         return list.get(0);
     }
 
+    public int countUserFiles(Long userId, Integer status) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        if (status != null) {
+            param.put("status", status);
+        }
+
+        return fileInfoDao.countFileList(param);
+    }
+
     private String generateFileName(String source) {
         // 使用时间戳命名
         String res = System.currentTimeMillis() + "";

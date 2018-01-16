@@ -74,4 +74,13 @@ public interface IFileService {
      */
     FileInfoBean getFileInfoById(Long fileId);
 
+    /**
+     * 获取用户文件列表的总数
+     *
+     * @param userId
+     * @param status 为null代表所有状态 （FileInfoConstant.STATUS_xxx)
+     * @return
+     */
+    int countUserFiles(Long userId, Integer status);
+
 }

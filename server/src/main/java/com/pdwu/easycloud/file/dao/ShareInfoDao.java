@@ -42,4 +42,12 @@ public interface ShareInfoDao {
      */
     int delete(Map param);
 
+    /**
+     * 统计分享数量
+     *
+     * @param param
+     * @return
+     */
+    int countShareList(Map param);
+
 }

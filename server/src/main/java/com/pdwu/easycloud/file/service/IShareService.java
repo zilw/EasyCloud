@@ -51,4 +51,13 @@ public interface IShareService {
      */
     List<ShareInfoBean> listUserShareInfos(Long userId, Integer status, int pageNum, int pageSize);
 
+    /**
+     * 统计用户分享列表数量
+     *
+     * @param userId
+     * @param status
+     * @return
+     */
+    int countShareList(Long userId, Integer status);
+
 }

@@ -158,4 +158,23 @@ public class ShareInfoDaoTest {
 
     }
 
+    @Test
+    public void countShareList() throws Exception {
+        dbSetupTracker.skipNextLaunch();
+
+        //O(userId, shareId, status, fileId)
+        Map<String, Object> param = new HashMap<String, Object>();
+
+        //指定用户
+        param.clear();
+        param.put("userId", 10011L);
+        assertEquals(3, shareInfoDao.countShareList(param));
+
+        //指定用户和status
+        param.clear();
+        param.put("status", ShareInfoConstant.STATUS_NORMAL);
+        param.put("userId", 10011L);
+        assertEquals(1, shareInfoDao.countShareList(param));
+    }
+
 }

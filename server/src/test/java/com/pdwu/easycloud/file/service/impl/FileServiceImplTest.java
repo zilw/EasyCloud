@@ -121,6 +121,7 @@ public class FileServiceImplTest {
 
     @Test
     public void listUserFiles() throws Exception {
+        dbSetupTracker.skipNextLaunch();
 
         //arg
         List<FileInfoBean> list = fileService.listUserFiles(null, null, 1, 10);
@@ -150,6 +151,8 @@ public class FileServiceImplTest {
 
     @Test
     public void getFileInfoByMD5() throws Exception {
+        dbSetupTracker.skipNextLaunch();
+
         //arg
         assertNull(fileService.getFileInfoByMD5(null));
 
@@ -165,6 +168,8 @@ public class FileServiceImplTest {
 
     @Test
     public void getFileInfoById() throws Exception {
+        dbSetupTracker.skipNextLaunch();
+
         //arg
         assertNull(fileService.getFileInfoById(null));
 
@@ -220,4 +225,16 @@ public class FileServiceImplTest {
         fileService.uploadFile(10014L, multipartFile2);
 
     }*/
+
+    @Test
+    public void countUserFiles() throws Exception {
+        dbSetupTracker.skipNextLaunch();
+
+        assertEquals(3, fileService.countUserFiles(null, null));
+
+        assertEquals(2, fileService.countUserFiles(10011L, null));
+
+        assertEquals(1, fileService.countUserFiles(10011L, FileInfoConstant.STATUS_NORMAL));
+
+    }
 }

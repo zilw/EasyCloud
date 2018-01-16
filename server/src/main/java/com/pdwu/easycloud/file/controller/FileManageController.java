@@ -3,6 +3,7 @@ package com.pdwu.easycloud.file.controller;
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
 import com.pdwu.easycloud.common.config.AppConfig;
+import com.pdwu.easycloud.common.util.WebUtils;
 import com.pdwu.easycloud.file.bean.FileInfoBean;
 import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.constant.FileInfoConstant;
@@ -82,14 +83,13 @@ public class FileManageController {
             intPageSize = pageSize;
         }
 
+        //获取列表详情
         List<FileInfoBean> list = fileService.listUserFiles(userId, FileInfoConstant.STATUS_NORMAL, intPageNum, intPageSize);
+        //获取总数
+        int totalNumber = fileService.countUserFiles(userId, FileInfoConstant.STATUS_NORMAL);
 
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("list", list);
+        Map<String, Object> map = WebUtils.generateListResultMap(list, totalNumber, intPageSize, intPageNum);
         map.put("userId", userId);
-        map.put("count", list.size());
-        map.put("pageNum", intPageNum);
-        map.put("pageSize", intPageSize);
 
         return ResultBean.success(map);
     }
@@ -143,11 +143,9 @@ public class FileManageController {
         }
 
         List<ShareInfoBean> list = shareService.listUserShareInfos(userId, status, intPageNum, intPageSize);
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("list", list);
-        map.put("count", list.size());
-        map.put("pageNum", intPageNum);
-        map.put("pageSize", intPageSize);
+        int totalNumber = shareService.countShareList(userId, status);
+
+        Map<String, Object> map = WebUtils.generateListResultMap(list, totalNumber, intPageSize, intPageNum);
 
         return ResultBean.success(map);
     }

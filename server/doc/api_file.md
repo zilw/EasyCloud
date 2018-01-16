@@ -84,6 +84,8 @@
         "count": 2,
         "pageSize": 10,
         "pageNum": 1, 
+        "totalNumber": 25,
+        "totalPage": 3,
         "list": [
             {
                 "fileId": 105,
@@ -117,6 +119,8 @@
 |:-----  |:-----|-----                           |
 |list |array   |文件详情数组  |
 |count |int   |实际返回的数量  |
+|totalNumber |int   |列表总数量  |
+|totalPage |int   |根据总数量和当前每页数量得出的总页数  |
 |pageNum |int   |当前页码  |
 |pageSize |int   |当前每页数量  |
 |- |-   |-  |
@@ -333,6 +337,8 @@
     "data": {
         "count": 1,
         "pageSize": 10,
+        "totalNumber": 25,
+        "totalPage": 3,
         "list": [
             {
                 "shareId": 102233,
@@ -362,8 +368,12 @@
 
 |参数名|类型|说明|
 |:-----  |:-----|-----                           |
-|code |int   |返回码  |
-
+|list |array   |分享详情数组  |
+|count |int   |实际返回的数量  |
+|totalNumber |int   |列表总数量  |
+|totalPage |int   |根据总数量和当前每页数量得出的总页数  |
+|pageNum |int   |当前页码  |
+|pageSize |int   |当前每页数量  |
 
  **备注** 
 

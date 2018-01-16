@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("src/main/resources")
-@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml","classpath:spring/db-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/spring-context.xml", "classpath:spring/spring-mvc.xml", "classpath:spring/db-test.xml"})
 public class FileInfoDaoTest {
 
     public static DbSetupTracker dbSetupTracker = new DbSetupTracker();
@@ -160,6 +160,29 @@ public class FileInfoDaoTest {
         param.put("lastTime", new Date());
         int updatedCount2 = fileInfoDao.updateFileInfo(param);
         assertEquals(1, updatedCount2);
+
+    }
+
+    @Test
+    public void countFileList() throws Exception {
+
+        dbSetupTracker.skipNextLaunch();
+
+        //O(userId, status)
+        Map<String, Object> param = new HashMap<String, Object>();
+
+        //统计当前所有
+        assertEquals(3, fileInfoDao.countFileList(param));
+
+        //统计用户
+        param.put("userId", 10011L);
+        assertEquals(2, fileInfoDao.countFileList(param));
+
+        //统计用户，包含状态
+        param.clear();
+        param.put("userId", 10011L);
+        param.put("status", FileInfoConstant.STATUS_NORMAL);
+        assertEquals(1, fileInfoDao.countFileList(param));
 
     }
 

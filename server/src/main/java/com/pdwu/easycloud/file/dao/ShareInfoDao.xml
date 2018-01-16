@@ -99,4 +99,22 @@
 
     </delete>
 
+    <select id="countShareList" parameterType="map" resultType="int">
+
+        SELECT count(*)
+        FROM share_info
+        <where>
+
+            <if test="userId != null">
+                share_info.user_id = #{userId}
+            </if>
+
+            <if test="status != null">
+                AND share_info.status = #{status}
+            </if>
+
+        </where>
+
+    </select>
+
 </mapper>

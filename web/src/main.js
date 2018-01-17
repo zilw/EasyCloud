@@ -9,7 +9,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 //Vue.use(ElementUI)
 
 import { Pagination,Button,ButtonGroup, Select,Dialog,Menu,  Submenu,  MenuItem,  MenuItemGroup,Input,  InputNumber,Table,
-  TableColumn,  Form,  FormItem, Alert, Icon,  Row,  Col,  Upload,  Progress,Container,  Header,  Aside,  Main,  Footer,
+  TableColumn, Tooltip, Form,  FormItem, Alert, Icon,  Row,  Col,  Upload,  Progress,Container,  Header,  Aside,  Main,  Footer,
   Loading,  MessageBox,  Message,  Notification} from 'element-ui' 
 
 Vue.use(Pagination)
@@ -25,6 +25,7 @@ Vue.use(Button)
 Vue.use(ButtonGroup)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Tooltip)
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Alert)

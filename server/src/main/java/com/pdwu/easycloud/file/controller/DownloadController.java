@@ -52,7 +52,7 @@ public class DownloadController {
             writeError(response, bean);
         } else {
             Map<String, Object> map = (Map<String, Object>) bean.getData();
-            writeFile(response, (File) map.get("file"), (FileInfoBean) map.get("fileInfo"));
+            writeFile(response, (File) map.get("file"), (FileInfoBean) map.get("fileInfo"), true);
         }
 
     }
@@ -68,7 +68,7 @@ public class DownloadController {
 
     }
 
-    private void writeFile(HttpServletResponse response, File file, FileInfoBean fileInfoBean) throws IOException {
+    private void writeFile(HttpServletResponse response, File file, FileInfoBean fileInfoBean, boolean needDisposition) throws IOException {
         if (file == null || fileInfoBean == null || !file.exists()) {
             writeError(response, ResultBean.SERVER_ERROR);
             return;
@@ -81,11 +81,28 @@ public class DownloadController {
 
         response.setContentType(mimeType);
         //response.setContentLengthLong(file.length());
-        response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileInfoBean.getName() + "\"");
+        if (needDisposition) {
+            response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileInfoBean.getName() + "\"");
+        }
 
         //文件下载
         InputStream in = new BufferedInputStream(new FileInputStream(file));
         FileCopyUtils.copy(in, response.getOutputStream());
+    }
+
+    @RequestMapping(value = {AppConfig.API_PUB_PREVIEW})
+    public void preview(HttpServletRequest request, HttpServletResponse response, Long fileId) throws IOException {
+
+        Long userId = (Long) request.getSession().getAttribute("userId");
+
+        ResultBean bean = downloadService.download(userId, fileId, null, null);
+        if (bean.getCode() != ResultCode.ok) {
+            writeError(response, bean);
+        } else {
+            Map<String, Object> map = (Map<String, Object>) bean.getData();
+            writeFile(response, (File) map.get("file"), (FileInfoBean) map.get("fileInfo"), false);
+        }
+
     }
 
 }

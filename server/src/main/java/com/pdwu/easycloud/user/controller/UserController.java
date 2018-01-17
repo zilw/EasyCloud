@@ -76,15 +76,15 @@ public class UserController {
 
     @RequestMapping(value = AppConfig.API_LOGOUT)
     @ResponseBody
-    public Object logout(HttpServletRequest request, String tokenParam) {
+    public Object logout(HttpServletRequest request, String token) {
 
-        String token = (String) request.getSession().getAttribute(SessionAttributeConstant.TOKEN);
+        String trueToken = (String) request.getSession().getAttribute(SessionAttributeConstant.TOKEN);
 
-        if (!StringUtils.isBlank(tokenParam)) {
-            token = tokenParam;
+        if (!StringUtils.isBlank(token)) {
+            trueToken = token;
         }
 
-        return this.userService.logout(token);
+        return this.userService.logout(trueToken);
 
     }
 

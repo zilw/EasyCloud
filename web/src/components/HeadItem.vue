@@ -83,7 +83,6 @@ export default {
 }
 
 #span-username{
-  padding: 0 15px;
     font-size: 15px;
     line-height: 30px;
     color: #303133;

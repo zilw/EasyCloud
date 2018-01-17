@@ -1,6 +1,6 @@
 <template>
   <div class="myfile">
-    <el-container direction="vertical" style="height: 900px; border: 1px solid #eee">
+    <el-container direction="vertical" style="height: 880px; border: 1px solid #eee">
 
       <head-item></head-item>
 
@@ -11,12 +11,13 @@
         <el-container direction="vertical">
           <el-main>
             <el-row>
-              <el-col :span="2">
+              <el-col :span="2" :offset="0">
                 <el-button @click="dialogUploadVisible = true" size="medium" type="primary">上传文件</el-button>
               </el-col>
+              
             </el-row>
             <el-table :data="tableData" v-loading="loading" height="680">
-              <el-table-column prop="name" label="文件名" align="left" min-width="180">
+              <el-table-column prop="name" label="文件名" align="left" min-width="180" :render-header="renderHeader">
                 <template slot-scope="scope">
                   <template v-if="editIndex === scope.$index">
                     <el-input :value="scope.row.name" v-model="inputFileName">
@@ -26,7 +27,7 @@
                     </el-input>
                   </template>
                   <template v-else>
-                    {{scope.row.name}}
+                    <span @click="clickFileName(scope.$index, scope.row)">{{scope.row.name}}</span>
                   </template>
                 </template>
               </el-table-column>
@@ -270,11 +271,27 @@ export default {
     handleCurrentChange(val) {
         //console.log(`当前页: ${val}`);
         this.requestListApi(val,this.pageSize);
-    }
+    },
+    clickFileName(index, row){
+      var strRegex = "(.jpg|.png|.gif|.jpeg|.pdf)$"; 
+      var re = new RegExp(strRegex);
+      if (!re.test(row.name.toLowerCase())){
+        return;
+      } 
+      window.open("/api/pub/preview?fileId=" + row.fileId);
+    },
+    renderHeader(createElement, { column }) {
+        var createItemI = createElement('i',{'class':'el-icon-question'});
+
+        var createTooltip = createElement('el-tooltip',
+          {attrs:{content:'点击图片、PDF文件名直接跳转预览',placement:'top'}},
+          [createItemI]);
+
+        return createElement('span',{},[column.label+' ',createTooltip]);
+      }
   }
 
 }
-
 
 </script>
 

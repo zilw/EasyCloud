@@ -1,6 +1,6 @@
 <template>
   <div class="myfile">
-    <el-container direction="vertical" style="height: 900px; border: 1px solid #eee">
+    <el-container direction="vertical" style="height: 880px; border: 1px solid #eee">
 
       <head-item></head-item>
 

@@ -2,6 +2,7 @@ package com.pdwu.easycloud.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.bean.SessionAttributeConstant;
 import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.user.bean.UserBean;
@@ -17,6 +18,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -137,13 +139,17 @@ public class UserControllerTest {
     public void logout() throws Exception {
         Mockito.when(userService.logout("token1233")).thenReturn(ResultBean.success(""));
 
+        //param 指定token
         mockMvc.perform(MockMvcRequestBuilders.get(AppConfig.API_LOGOUT).param("token", "token1233"))
-                .andDo(MockMvcResultHandlers.log())
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(200)));
 
-        mockMvc.perform(MockMvcRequestBuilders.get(AppConfig.API_LOGOUT).param("token", ""))
-                .andDo(MockMvcResultHandlers.log())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(400)));
+        //从session中取token
+        MockHttpSession session = new MockHttpSession();
+        session.setAttribute(SessionAttributeConstant.TOKEN, "token1233");
+        mockMvc.perform(MockMvcRequestBuilders.get(AppConfig.API_LOGOUT).session(session))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code", is(200)));
     }
 
     //构建post json请求

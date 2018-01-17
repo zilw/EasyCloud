@@ -17,3 +17,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 server/home/
+server/.settings/
+server/.classpath
+server/.project

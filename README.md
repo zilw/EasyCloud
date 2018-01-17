@@ -7,7 +7,7 @@
 EasyCloud是一个前后端分离的简易文件云平台，支持管理与分享文件。  
 
 ## 技术栈
-- 后端使用Spring, SpringMVC, Mybatis, MySQL实现,详见 [server/README.md](./server/README.md)
+- 后端使用Spring, SpringMVC, Mybatis, MySQL实现,详见 [/server/README.md](./server/README.md)
 - 前端使用Vue.js, Element UI实现
 
 ---  
@@ -15,19 +15,17 @@ EasyCloud是一个前后端分离的简易文件云平台，支持管理与分�
 ### 开发环境运行  
 - 后端 `/server`
   1. `/src/resources/db.properties` 配置MySQL数据库连接信息 
-  2. `/src/resoutces/app/easycloud.properties` 可选修改App配置 
+  2. `/src/resoutces/app/easycloud.properties` 修改App配置（非必须） 
   3. 使用IDE导入项目并配置Tomcat运行  
 
 - 前端 `/web`
-  1. web目录下 `npm install`
+  1. `npm install`
   2. 修改 `config/index.js` 中 `module.exports: dev.proxyTable.target` 为服务端地址
   3. `npm run dev`  
 
-
-
-### 使用Nginx部署运行
+### 使用Nginx部署运行（生产环境）
 - 1.修改配置（同上）  
-  > 也可在 `/src/resoutces/spring/spring-mybatis.xml` 和 `src/main/java/com/pdwu/easycloud/common/config/AppConfig.java` 增加一条生产环境配置文件路径
+  > 也可在 `/src/resoutces/spring/spring-mybatis.xml` 和 `src/main/java/com/pdwu/easycloud/common/config/AppConfig.java` 里面增加一条生产环境配置文件的路径
 
 - 2.打包
   - 后端执行 `mvn clean package` 生成war包 

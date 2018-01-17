@@ -8,10 +8,11 @@ import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 //Vue.use(ElementUI)
 
-import { Button,ButtonGroup, Select,Dialog,Menu,  Submenu,  MenuItem,  MenuItemGroup,Input,  InputNumber,Table,
+import { Pagination,Button,ButtonGroup, Select,Dialog,Menu,  Submenu,  MenuItem,  MenuItemGroup,Input,  InputNumber,Table,
   TableColumn,  Form,  FormItem, Alert, Icon,  Row,  Col,  Upload,  Progress,Container,  Header,  Aside,  Main,  Footer,
   Loading,  MessageBox,  Message,  Notification} from 'element-ui' 
-  
+
+Vue.use(Pagination)
 Vue.use(Dialog)
 Vue.use(Menu)
 Vue.use(Submenu)
@@ -71,6 +72,9 @@ Vue.prototype.$user = {
   },
   lastTime: function () {
     return localStorage.getItem("lastTime");
+  },
+  clean(){
+    localStorage.clear();
   }
 }
 
@@ -114,10 +118,23 @@ axios.interceptors.response.use(function (response) {
   //统一处理token无效
   if (error.response.status === 401) {
     window.localStorage["isLogin"] = false;
-    Vue.prototype.showErrorMsg('请重新登录');
-    router.push({
-      name: 'route-login'
-    });
+
+    var toWhere = {
+      name: 'route-login',
+      params: { 
+        account: '' 
+      }
+    };
+
+    if (Vue.prototype.$user.account() == undefined){
+      Vue.prototype.showErrorMsg('请先登录');
+    }else{
+      Vue.prototype.showErrorMsg('会话过期，请重新登录');
+      toWhere.params.account = Vue.prototype.$user.account();      
+    }
+   
+    router.push(toWhere);
+
   } else {
     
     if (error.config.responseType === "arraybuffer") {
@@ -133,7 +150,11 @@ axios.interceptors.response.use(function (response) {
       Vue.prototype.showErrorMsg(error.response.data.msg);
     } else {
       //否则展示状态码
-      Vue.prototype.showErrorMsg(error.response.status + " " + error.response.statusText)
+      var pre = '';
+      if (error.response.status >= 500){
+        pre = '服务异常，请刷新重试！';
+      }
+      Vue.prototype.showErrorMsg(pre + error.response.status + " " + error.response.statusText)
     }
   }
 

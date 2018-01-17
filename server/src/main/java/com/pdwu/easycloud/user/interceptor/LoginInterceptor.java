@@ -2,6 +2,7 @@ package com.pdwu.easycloud.user.interceptor;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
 import com.pdwu.easycloud.common.bean.ResultCode;
+import com.pdwu.easycloud.common.bean.SessionAttributeConstant;
 import com.pdwu.easycloud.common.util.JsonUtils;
 import com.pdwu.easycloud.common.util.WebUtils;
 import com.pdwu.easycloud.user.bean.TokenBean;
@@ -56,7 +57,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         //2.2 有效
         TokenBean tokenBean = (TokenBean) resultBean.getData();
         httpServletRequest.getSession().setAttribute("userId", tokenBean.getUserId());
-
+        httpServletRequest.getSession().setAttribute(SessionAttributeConstant.TOKEN, token);
 
         return true;
     }

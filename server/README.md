@@ -43,7 +43,7 @@ EasyCloud是一个简易的文件分享平台。
 |:----:|:------------------:|----------------------------|:----:|------|:------------------:|
 | 用户 |        登录        | /api/pub/login             | POST |      |                    |
 |      |        注册        | /api/pub/register          | POST |      |                    |
-|      |        注销        | /api/pub/logout            |  GET | 需要 |                    |
+|      |        注销        | /api/usr/logout            |  GET | 需要 |                    |
 | 文件 |      上传文件      | /api/usr/file/upload       | POST | 需要 |                    |
 |      | 获取用户的文件列表 | /api/usr/file/list         |  GET | 需要 |                    |
 |      |     修改文件名     | /api/usr/file/rename       | POST | 需要 |                    |

@@ -102,7 +102,7 @@
 #### 1.3 用户注销
 
 **请求地址**   
-- ` ~/api/pub/logout  `  需要token
+- ` ~/api/usr/logout  `  需要token
   
 **请求方式**  
 - GET

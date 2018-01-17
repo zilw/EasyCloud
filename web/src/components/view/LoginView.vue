@@ -10,14 +10,14 @@
       
       <el-form :model="loginForm" :rules="loginRule" ref="loginForm">
         <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="账号"></el-input>
+          <el-input v-model="loginForm.username" placeholder="账号" ></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="loginForm.password" placeholder="密码"></el-input>
+          <el-input v-model="loginForm.password" placeholder="密码" type="password"></el-input>
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" class="btn" v-on:click="onSubmit('loginForm')">登录</el-button>
+          <el-button type="primary" class="btn" v-on:click="onSubmit('loginForm')" :loading="loginLoading">登录</el-button>
         </el-form-item>
       </el-form>
 
@@ -38,6 +38,7 @@ export default {
   name: "login-view",
   data() {
     return {
+      loginLoading: false,
       loginForm: {
         username: '',
         password: ''
@@ -49,10 +50,14 @@ export default {
             trigger: 'blur'
           },
           {
-            min: 3,
-            max: 8,
-            message: '长度在 3 到 8 个字符',
+            min: 4,
+            max: 12,
+            message: '长度在 4 到 12 个字符',
             trigger: 'blur'
+          },
+          {
+            pattern: /^[a-zA-Z0-9_]{4,12}$/,
+            message: '账号由数字、字母和下划线组成'
           }
         ],
         password: [{
@@ -60,16 +65,23 @@ export default {
             message: '请输入密码',
             trigger: 'blur'
           },
-          {
-            min: 3,
-            max: 20,
-            message: '长度在 3 到 20 个字符',
+         {
+            min: 6,
+            max: 16,
+            message: '长度在 6 到 16 个字符',
             trigger: 'blur'
+          },
+          {
+            pattern: /^[a-zA-Z0-9_]{6,16}$/,
+            message: '密码由数字、字母和下划线组成'
           }
         ]
       }
 
     }
+  },
+  created: function () {
+    this.loginForm.username = this.$route.params.account;
   },
   methods: {
     onSubmit(formName) {
@@ -84,9 +96,11 @@ export default {
           'password': this.loginForm.password
         };
 
+        this.loginLoading = true;
         var thiz = this;
-
         this.$http.post('/api/pub/login', mydata).then(function (response) {
+          thiz.loginLoading = false;
+
           if (response.data.code === 200) {
             
             window.localStorage["isLogin"] = true;
@@ -113,14 +127,8 @@ export default {
 
             return;
           } 
-          thiz.$message({
-              showClose: true,
-              message: response.data.msg,
-              type: 'error'
-            });
+          thiz.showErrorMsg(response.data.msg);
           
-        }).catch(function (error) {
-          console.log(error);
         });
 
       });
@@ -137,6 +145,7 @@ export default {
 <style scoped>
 
 .login {
+  margin-top: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;

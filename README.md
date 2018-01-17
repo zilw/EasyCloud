@@ -12,6 +12,10 @@ EasyCloud是一个前后端分离的简易文件云平台，支持管理与分�
 
 ---  
 
+## 部署运行  
+
+以下示例两种运行方式。
+
 ### 开发环境运行  
 - 后端 `/server`
   1. `/src/resources/db.properties` 配置MySQL数据库连接信息 

@@ -46,6 +46,17 @@
                 </template>
               </el-table-column>
             </el-table>
+
+          <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPageNum"
+                :page-sizes="[5, 10, 20, 50]"
+                :page-size="pageSize"
+                layout="total, sizes, prev, pager, next"
+                :total="totalNumber">
+              </el-pagination>
+
           </el-main>
 
           <!-- 上传文件弹出框 -->
@@ -89,7 +100,10 @@ export default {
       dialogUploadVisible: false,
       headers: {},
       editIndex: -1,
-      inputFileName: ""
+      inputFileName: "",
+      pageSize: 10,
+      currentPageNum: 1,
+      totalNumber: 0
     }
   },
   created: function () {
@@ -97,17 +111,29 @@ export default {
   },
   methods: {
     //获取文件列表
-    requestListApi() {
+    requestListApi(pageNum,pageSize) {
+      var truePageNum = 1;
+      var truePageSize = 10;
+      if( pageNum != undefined){
+        truePageNum = pageNum;
+      }
+      if ( pageSize != undefined ){
+        truePageSize = pageSize;
+      }
+
       var thiz = this;
       this.$http.get("/api/usr/file/list", {
         params: {
-          pageNum: 1,
-          pageSize: 10
+          pageNum: truePageNum,
+          pageSize: truePageSize
         }
       }).then(function (response) {
         if (response.data.code === 200) {
           thiz.loading = false;
           thiz.tableData = response.data.data.list;
+          thiz.totalNumber = response.data.data.totalNumber;
+          thiz.pageSize = response.data.data.pageSize;
+          thiz.currentPageNum = response.data.data.pageNum;
         }else{
           thiz.showErrorMsg(response.data.msg);
         }
@@ -183,7 +209,7 @@ export default {
       });
     },
     handleShare(index, row) {
-      this.$confirm('分享后任何人可查看或下载, 是否继续?', '分享文件 ' + row.name, {
+      this.$confirm('分享后任何人可查看或下载, 是否继续?', row.name, {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -236,6 +262,14 @@ export default {
         }
 
       });
+    },
+    handleSizeChange(val) {
+        //console.log(`每页 ${val} 条`);
+        this.requestListApi(1,val);
+      },
+    handleCurrentChange(val) {
+        //console.log(`当前页: ${val}`);
+        this.requestListApi(val,this.pageSize);
     }
   }
 

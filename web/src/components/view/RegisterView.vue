@@ -13,11 +13,13 @@
           <el-input v-model="registerForm.username" placeholder="账号"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="registerForm.password" placeholder="密码"></el-input>
+          <el-input v-model="registerForm.password" placeholder="密码" type="password"></el-input>
         </el-form-item>
-
+        <el-form-item prop="passwordConfirm">
+          <el-input v-model="registerForm.passwordConfirm" placeholder="请再次输入密码" type="password"></el-input>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" class="btn" v-on:click="onSubmit('registerForm')">立即注册</el-button>
+          <el-button type="primary" class="btn" v-on:click="onSubmit('registerForm')"  :loading="regLoading">立即注册</el-button>
         </el-form-item>
       </el-form>
 
@@ -37,36 +39,49 @@
 export default {
   name: "register-view",
   data() {
+    var passwordRule = [{
+        required: true,
+        message: '请输入密码',
+        trigger: 'blur'
+      },
+      {
+        min: 6,
+        max: 16,
+        message: '长度在 6 到 16 个字符',
+        trigger: 'blur'
+      },
+      {
+        pattern: /^[a-zA-Z0-9_]{6,16}$/,
+        message: '密码只能包含数字、字母和下划线'
+      }
+    ];
+    var usernameRule = [{
+        required: true,
+        message: '请输入账号',
+        trigger: 'blur'
+      },
+      {
+        min: 4,
+        max: 12,
+        message: '长度在 4 到 12 个字符',
+        trigger: 'blur'
+      },
+      {
+        pattern: /^[a-zA-Z0-9_]{4,12}$/,
+        message: '账号只能包含数字、字母和下划线'
+      }
+    ];
     return {
+      regLoading: false,
       registerForm: {
         username: '',
-        password: ''
+        password: '',
+        passwordConfirm: ''
       },
       registerRule: {
-        username: [{
-            required: true,
-            message: '请输入账号',
-            trigger: 'blur'
-          },
-          {
-            min: 3,
-            max: 8,
-            message: '长度在 3 到 8 个字符',
-            trigger: 'blur'
-          }
-        ],
-        password: [{
-            required: true,
-            message: '请输入密码',
-            trigger: 'blur'
-          },
-          {
-            min: 3,
-            max: 20,
-            message: '长度在 3 到 20 个字符',
-            trigger: 'blur'
-          }
-        ]
+        username: usernameRule,
+        password: passwordRule,
+        passwordConfirm: passwordRule
       }
 
     }
@@ -79,28 +94,38 @@ export default {
           return false;
         }
 
+        if (this.registerForm.password !== this.registerForm.passwordConfirm) {
+          this.showErrorMsg('两次密码输入不一致！');
+          return false;
+        }
+
         var mydata = {
-          'account': this.registerForm.username,
-          'password': this.registerForm.password
+          'account': this.registerForm.username.trim(),
+          'password': this.registerForm.password.trim()
         };
 
+        this.regLoading = true;
         var thiz = this;
         this.$http.post('/api/pub/register', mydata).then(function (response) {
-          console.log(response);
+
+          this.regLoading = false;
 
           if (response.data.code === 200) {
-              var onComplete = function(){
-               thiz.showSuccessMsg(mydata.account + '注册成功，请登录');
+            var onComplete = function () {
+              thiz.showSuccessMsg(mydata.account + ' 注册成功，请登录');
+            }
+
+            thiz.$router.push({
+              name: 'route-login',
+              params: {
+                account: mydata.account
               }
-            
-            thiz.$router.push({path: '/login'},onComplete);
+            }, onComplete);
 
           } else {
             thiz.showErrorMsg(response.data.msg);
           }
 
-        }).catch(function (error) {
-          console.log(error);
         });
 
       });
@@ -109,13 +134,12 @@ export default {
   }
 }
 
-
-
 </script>
 
 <style scoped>
 
 .register {
+  margin-top: 5%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -1,6 +1,7 @@
 package com.pdwu.easycloud.user.controller;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.bean.SessionAttributeConstant;
 import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.user.bean.TokenBean;
 import com.pdwu.easycloud.user.bean.UserBean;
@@ -75,9 +76,12 @@ public class UserController {
 
     @RequestMapping(value = AppConfig.API_LOGOUT)
     @ResponseBody
-    public Object logout(@RequestParam String token) {
-        if (StringUtils.isBlank(token)) {
-            return ResultBean.fail("注销失败，token不能为空");
+    public Object logout(HttpServletRequest request, String tokenParam) {
+
+        String token = (String) request.getSession().getAttribute(SessionAttributeConstant.TOKEN);
+
+        if (!StringUtils.isBlank(tokenParam)) {
+            token = tokenParam;
         }
 
         return this.userService.logout(token);

@@ -52,6 +52,7 @@ EasyCloud是一个简易的文件分享平台。
 |      |      取消分享      | /api/usr/file/cancelShare  | POST | 需要 |                    |
 |      |  获取个人分享列表  | /api/usr/file/shareList    |  GET | 需要 |                    |
 | 下载 |      下载文件      | /api/pub/download          |  GET |      | 非公开文件需要令牌 |
+|     |      预览文件      | /api/pub/preview          |  GET |      | 非公开文件需要令牌 |
 | 分享 |  获取文件分享详情  | /api/pub/share/{shortlink} |  GET |      |                    |
 |      |                    |                            |      |      |                    |
 

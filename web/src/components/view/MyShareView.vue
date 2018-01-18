@@ -108,7 +108,7 @@ export default {
     },
     showShortLink(index, row){
 
-       this.$confirm(''+row.shortlink, row.fileInfo.fileName, {
+       this.$confirm(''+row.shortlink, row.fileInfo.name, {
           confirmButtonText: '复制',
           cancelButtonText: '取消',
           type: 'info'

@@ -27,6 +27,14 @@ public interface ShareInfoDao {
     int updateShareInfoStatus(Map param);
 
     /**
+     * 根据 shareId 更新分享信息
+     *
+     * @param param R(shareId, lastTime),O(shortlink)
+     * @return
+     */
+    int updateShareInfo(Map param);
+
+    /**
      * 查找指定用户的分享信息/某条分享的详情
      *
      * @param param O(userId, shareId, status, fileId)

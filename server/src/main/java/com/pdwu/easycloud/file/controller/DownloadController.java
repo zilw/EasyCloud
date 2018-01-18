@@ -79,10 +79,13 @@ public class DownloadController {
             mimeType = "application/octet-stream";
         }
 
+        //防止中文乱码
+        String fileName = new String(fileInfoBean.getName().getBytes("gbk"), "ISO8859-1");
+
         response.setContentType(mimeType);
         //response.setContentLengthLong(file.length());
         if (needDisposition) {
-            response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileInfoBean.getName() + "\"");
+            response.setHeader("Content-Disposition", "attachment;fileName=\"" + fileName + "\"");
         }
 
         //文件下载
@@ -91,11 +94,11 @@ public class DownloadController {
     }
 
     @RequestMapping(value = {AppConfig.API_PUB_PREVIEW})
-    public void preview(HttpServletRequest request, HttpServletResponse response, Long fileId) throws IOException {
+    public void preview(HttpServletRequest request, HttpServletResponse response, Long fileId, Long shareId) throws IOException {
 
         Long userId = (Long) request.getSession().getAttribute("userId");
 
-        ResultBean bean = downloadService.download(userId, fileId, null, null);
+        ResultBean bean = downloadService.download(userId, fileId, shareId, null);
         if (bean.getCode() != ResultCode.ok) {
             writeError(response, bean);
         } else {

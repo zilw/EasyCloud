@@ -8,6 +8,7 @@
         <result column="file_id" property="fileId"/>
         <result column="user_id" property="userId"/>
         <result column="status" property="status"/>
+        <result column="shortlink" property="shortlink"/>
         <result column="create_time" property="createTime"/>
         <result column="last_time" property="lastTime"/>
 
@@ -31,6 +32,7 @@
         share_info.user_id,
         share_info.file_id,
         share_info.status,
+        share_info.shortlink,
         share_info.create_time,
         share_info.last_time,
         file_info.file_id as F_file_id,
@@ -74,6 +76,24 @@
 
         UPDATE share_info
         SET last_time = #{lastTime}, status = #{status}
+
+        <where>
+            share_id = #{shareId}
+        </where>
+
+    </update>
+
+    <update id="updateShareInfo" parameterType="map">
+
+        UPDATE share_info
+        <set>
+            last_time = #{lastTime}
+
+            <if test="shortlink != null">
+                , shortlink = #{shortlink}
+            </if>
+
+        </set>
 
         <where>
             share_id = #{shareId}

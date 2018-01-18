@@ -99,6 +99,18 @@ public class ShareInfoDaoTest {
     }
 
     @Test
+    public void updateShareInfo() throws Exception {
+        //R(shareId, lastTime) O(shortlink)
+        Map<String, Object> param = new HashMap<String, Object>();
+
+        param.put("shareId", 100123L);
+        param.put("shortlink", "12222af");
+        param.put("lastTime", new Date());
+        int res = shareInfoDao.updateShareInfo(param);
+        assertEquals(1, res);
+    }
+
+    @Test
     public void selectShareInfo() throws Exception {
 
         //O(userId, shareId, status, fileId)

@@ -12,12 +12,30 @@ public class ShareInfoBean {
     private Long shareId;
     private Long userId;
     private Long fileId;
+    private String password;
+    private String shortlink;
     private Integer status;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastTime;
     private FileInfoBean fileInfo;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getShortlink() {
+        return shortlink;
+    }
+
+    public void setShortlink(String shortlink) {
+        this.shortlink = shortlink;
+    }
 
     public FileInfoBean getFileInfo() {
         return fileInfo;
@@ -81,6 +99,8 @@ public class ShareInfoBean {
                 "shareId=" + shareId +
                 ", userId=" + userId +
                 ", fileId=" + fileId +
+                ", password='" + password + '\'' +
+                ", shortlink='" + shortlink + '\'' +
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", lastTime=" + lastTime +

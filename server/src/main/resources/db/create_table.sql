@@ -50,10 +50,12 @@ CREATE TABLE share_info (
   share_id    BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   user_id     BIGINT UNSIGNED,
   file_id     BIGINT UNSIGNED,
+  password    VARCHAR(10),
+  shortlink   VARCHAR(32),
   status      TINYINT         DEFAULT 0,
   create_time DATETIME(3) NOT NULL,
   last_time   DATETIME(3) NOT NULL
 )
   ENGINE = INNODB
-  AUTO_INCREMENT = 100001
+  AUTO_INCREMENT = 1000001
   DEFAULT CHARSET = utf8;

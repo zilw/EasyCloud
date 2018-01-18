@@ -184,7 +184,7 @@ export default {
       });
     },
     handleDelete(index, row) {
-      this.$confirm('此操作将永久删除文件, 是否继续?', '确认删除 ' + row.name, {
+      this.$confirm('此操作将永久删除文件, 是否继续?', '删除文件', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -210,7 +210,7 @@ export default {
       });
     },
     handleShare(index, row) {
-      this.$confirm('分享后任何人可查看或下载, 是否继续?', row.name, {
+      this.$confirm('分享后任何人可查看或下载, 是否继续?', '分享文件', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

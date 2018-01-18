@@ -1,6 +1,7 @@
 package com.pdwu.easycloud.file.service.impl;
 
 import com.pdwu.easycloud.common.bean.ResultBean;
+import com.pdwu.easycloud.common.config.AppConfig;
 import com.pdwu.easycloud.file.bean.ShareInfoBean;
 import com.pdwu.easycloud.file.constant.ShareInfoConstant;
 import com.pdwu.easycloud.file.dao.ShareInfoDao;
@@ -26,6 +27,9 @@ public class ShareServiceImpl implements IShareService {
     @Autowired
     private IShortLinkService shortLinkService;
 
+    @Autowired
+    private AppConfig appConfig;
+
     @Transactional
     public ResultBean insertShareInfo(Long userId, Long fileId) {
         if (userId == null || fileId == null) {
@@ -41,9 +45,19 @@ public class ShareServiceImpl implements IShareService {
         bean.setCreateTime(now);
         bean.setLastTime(now);
 
-        int updated = shareInfoDao.insertShareInfo(bean);
+        shareInfoDao.insertShareInfo(bean);
+        //短链接： （地址+分享目录前缀+短链接码）
+        String shortlink = appConfig.getAppSite() +
+                AppConfig.URL_SHORT_LINK_PRE +
+                shortLinkService.getShortLink(bean.getShareId());
 
-        return updated == 1 ? ResultBean.success(bean) : ResultBean.fail("服务器错误");
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("shareId", bean.getShareId());
+        param.put("shortlink", shortlink);
+        param.put("lastTime", new Date());
+        shareInfoDao.updateShareInfo(param);
+
+        return ResultBean.success(bean);
     }
 
     @Transactional

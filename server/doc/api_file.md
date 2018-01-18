@@ -345,6 +345,7 @@
                 "userId": 10026,
                 "fileId": 106,
                 "status": 1,
+                "shortlink": "example.com/share/fsaf",
                 "createTime": "2018-01-06 03:39:25",
                 "lastTime": "2018-01-06 03:39:25",
                 "fileInfo": {
